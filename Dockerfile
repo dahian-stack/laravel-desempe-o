@@ -1,5 +1,9 @@
 FROM php:8.3-fpm-alpine
 
+# Instalar dependencias para PostgreSQL
+RUN apk add --no-cache postgresql-dev
+
+# Instalar extensiones de PHP
 RUN docker-php-ext-install pdo pdo_pgsql bcmath opcache
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
