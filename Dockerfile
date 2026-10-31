@@ -1,9 +1,7 @@
 FROM php:8.3-fpm-alpine
 
-# Instalar dependencias para PostgreSQL
 RUN apk add --no-cache postgresql-dev
 
-# Instalar extensiones de PHP
 RUN docker-php-ext-install pdo pdo_pgsql bcmath opcache
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
@@ -14,7 +12,8 @@ COPY . .
 
 RUN composer install --no-dev --optimize-autoloader --no-scripts
 
-RUN chmod -R 755 /var/www/html/storage /var/www/html/bootstrap/cache
+RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
+RUN chown -R www-data:www-data /var/www/html
 
 EXPOSE 8000
 
