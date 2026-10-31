@@ -1,34 +1,24 @@
 FROM php:8.3-fpm-alpine
 
-# Dependencias del sistema
-RUN apk add --no-cache postgresql-dev git unzip
+# Dependencias
+RUN apk add --no-cache postgresql-dev
 
-# Extensiones de PHP
+# Extensiones
 RUN docker-php-ext-install pdo pdo_pgsql bcmath opcache
 
 # Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Directorio de trabajo
 WORKDIR /var/www/html
 
-# Copiar archivos
 COPY . .
 
 # Instalar dependencias
 RUN composer install --no-dev --optimize-autoloader --no-scripts
 
-# Generar clave y limpiar caché
-RUN php artisan key:generate --force
-RUN php artisan config:clear
-RUN php artisan cache:clear
-
-# Permisos correctos
-RUN chown -R www-data:www-data /var/www/html
-RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
-
-# Crear tablas
-RUN php artisan migrate --force
+# Permisos — esto es lo que más falla
+RUN chmod -R 777 /var/www/html/storage
+RUN chmod -R 777 /var/www/html/bootstrap/cache
 
 EXPOSE 8000
 
