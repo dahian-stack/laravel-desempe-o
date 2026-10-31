@@ -18,7 +18,7 @@ RUN npm run build
 # ==========================================
 # ETAPA 2: Preparar Laravel y PHP
 # ==========================================
-FROM php:8.3-cli-alpine
+FROM php:8.4-cli-alpine
 
 # Dependencias necesarias para extensiones PHP
 RUN apk add --no-cache oniguruma-dev libxml2-dev
