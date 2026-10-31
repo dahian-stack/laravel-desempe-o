@@ -10,9 +10,9 @@ use App\Http\Controllers\PlanRodajeController;
 use App\Http\Controllers\EscenaController;
 use App\Http\Controllers\ProfileController;
 
-// Ruta de bienvenida
+// Página principal
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('dashboard');
 });
 
 // Rutas protegidas (solo usuarios conectados)
