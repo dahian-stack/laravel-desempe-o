@@ -10,9 +10,9 @@ class Personal extends Model
 {
     use HasFactory;
 
-    public $timestamps = false; // ✅ Le decimos: sin fechas automáticas
+    public $timestamps = false;
 
-    protected $table = 'Personal';
+    protected $table = 'personal';
     protected $primaryKey = 'ID_personal';
 
     protected $fillable = [
@@ -28,6 +28,11 @@ class Personal extends Model
 
     public function planes_rodaje(): HasMany
     {
-        return $this->hasMany(PlanRodaje::class, 'ID_personal', 'ID_personal');
+        return $this->hasMany(
+            PlanRodaje::class,
+            'ID_personal',
+            'ID_personal'
+        );
     }
 }
+
