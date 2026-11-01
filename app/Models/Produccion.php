@@ -19,7 +19,7 @@ class Produccion extends Model
         'Titulo',
         'Tipo',
         'Estado',
-        'Presupuesto',
+        'Presupuesto_inicial',
         'Fecha_inicio',
         'Fecha_fin',
         'Descripcion',
