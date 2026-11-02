@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="es" data-bs-theme="light">
 
@@ -29,44 +30,28 @@
         <div class="container-fluid">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url('/dashboard') }}">
-                        Inicio
-                    </a>
+                    <a class="nav-link" href="{{ url('/dashboard') }}">Inicio</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('clientes.index') }}">
-                        Clientes
-                    </a>
+                    <a class="nav-link" href="{{ route('clientes.index') }}">Clientes</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('producciones.index') }}">
-                        Producciones
-                    </a>
+                    <a class="nav-link" href="{{ route('producciones.index') }}">Producciones</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="{{ route('personales.index') }}">
-                        Personal
-                    </a>
+                    <a class="nav-link active" href="{{ route('personales.index') }}">Personal</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('equipos_tecnicos.index') }}">
-                        Equipos Técnicos
-                    </a>
+                    <a class="nav-link" href="{{ route('equipos_tecnicos.index') }}">Equipos Técnicos</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('localizaciones.index') }}">
-                        Localizaciones
-                    </a>
+                    <a class="nav-link" href="{{ route('localizaciones.index') }}">Localizaciones</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('planes_rodaje.index') }}">
-                        Planes de Rodaje
-                    </a>
+                    <a class="nav-link" href="{{ route('planes_rodaje.index') }}">Planes de Rodaje</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('escenas.index') }}">
-                        Escenas
-                    </a>
+                    <a class="nav-link" href="{{ route('escenas.index') }}">Escenas</a>
                 </li>
             </ul>
         </div>
@@ -84,7 +69,9 @@
 
         <!-- Botón para crear -->
         <div class="text-end mb-3">
-            <a href="{{ route('personales.create') }}" class="btn btn-primary">+ Nuevo Personal</a>
+            <a href="{{ route('personales.create') }}" class="btn btn-primary">
+                + Nuevo Personal
+            </a>
         </div>
 
         <!-- Listado -->
@@ -101,15 +88,24 @@
                     <th class="text-end">Acciones</th>
                 </tr>
                 </thead>
+
                 <tbody>
                 @forelse ($personales as $personal)
                     <tr>
                         <td>{{ $personal->ID_personal }}</td>
-                        <td><strong>{{ $personal->Nombres }} {{ $personal->Apellidos }}</strong></td>
+
+                        <td>
+                            <strong>
+                                {{ $personal->Nombres }} {{ $personal->Apellidos }}
+                            </strong>
+                        </td>
+
                         <td>{{ $personal->Especialidad ?? '-' }}</td>
+
                         <td>
                             @php
                                 $disp = $personal->Disponibilidad;
+
                                 $claseDisp = match(true) {
                                     $disp === 'Disponible' => 'bg-success',
                                     $disp === 'Ocupado' => 'bg-warning text-dark',
@@ -117,23 +113,48 @@
                                     default => 'bg-secondary'
                                 };
                             @endphp
-                            <span class="badge {{ $claseDisp }}">{{ $disp ?? '-' }}</span>
+
+                            <span class="badge {{ $claseDisp }}">
+                                    {{ $disp ?? '-' }}
+                                </span>
                         </td>
+
                         <td class="text-end">
-                            @if ($personal->Tarifa)
+                            @if ($personal->Tarifa !== null)
                                 $ {{ number_format($personal->Tarifa, 0, ',', '.') }}
                             @else
                                 -
                             @endif
                         </td>
+
                         <td>{{ $personal->Contacto ?? '-' }}</td>
+
                         <td class="text-end">
-                            <a href="{{ route('personales.show', $personal->ID_personal) }}" class="btn btn-sm btn-outline-secondary">Ver</a>
-                            <a href="{{ route('personales.edit', $personal->ID_personal) }}" class="btn btn-sm btn-outline-primary">Editar</a>
-                            <form action="{{ route('personales.destroy', $personal->ID_personal) }}" method="POST" class="d-inline form-eliminar">
+                            <a
+                                href="{{ route('personales.show', $personal->ID_personal) }}"
+                                class="btn btn-sm btn-outline-secondary"
+                            >
+                                Ver
+                            </a>
+
+                            <a
+                                href="{{ route('personales.edit', $personal->ID_personal) }}"
+                                class="btn btn-sm btn-outline-primary"
+                            >
+                                Editar
+                            </a>
+
+                            <form
+                                action="{{ route('personales.destroy', $personal->ID_personal) }}"
+                                method="POST"
+                                class="d-inline form-eliminar"
+                            >
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-outline-danger">Eliminar</button>
+
+                                <button type="submit" class="btn btn-sm btn-outline-danger">
+                                    Eliminar
+                                </button>
                             </form>
                         </td>
                     </tr>
@@ -160,6 +181,7 @@
                     Gestión integral de producciones audiovisuales.
                 </p>
             </div>
+
             <div class="col-md-4">
                 <h6 class="text-uppercase mb-3">Navegación</h6>
                 <ul class="list-unstyled small">
@@ -177,6 +199,7 @@
                     </li>
                 </ul>
             </div>
+
             <div class="col-md-4">
                 <h6 class="text-uppercase mb-3">Contacto</h6>
                 <ul class="list-unstyled small">
@@ -192,9 +215,10 @@
             </div>
         </div>
     </div>
+
     <div class="border-top border-light border-opacity-25">
         <div class="container py-3 text-center small">
-            &copy; {{ date('Y') }} Mediapro. Todos los derechos reservados.
+            © {{ date('Y') }} Mediapro. Todos los derechos reservados.
         </div>
     </div>
 </footer>

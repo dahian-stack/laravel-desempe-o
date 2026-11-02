@@ -1,3 +1,4 @@
+
 <?php
 
 use Illuminate\Support\Facades\Route;
@@ -23,7 +24,7 @@ Route::middleware('auth')->group(function () {
         return view('dashboard');
     })->name('dashboard');
 
-    // 7 Módulos del sistema
+    // Módulos del sistema
     Route::resource('clientes', ClienteController::class);
     Route::resource('producciones', ProduccionController::class);
     Route::resource('personales', PersonalController::class);
@@ -33,9 +34,14 @@ Route::middleware('auth')->group(function () {
     Route::resource('escenas', EscenaController::class);
 
     // Perfil de usuario
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/profile', [ProfileController::class, 'edit'])
+        ->name('profile.edit');
+
+    Route::patch('/profile', [ProfileController::class, 'update'])
+        ->name('profile.update');
+
+    Route::delete('/profile', [ProfileController::class, 'destroy'])
+        ->name('profile.destroy');
 });
 
 // Rutas de autenticación (Breeze)

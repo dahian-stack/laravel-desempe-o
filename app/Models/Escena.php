@@ -9,21 +9,24 @@ class Escena extends Model
 {
     protected $table = 'escena';
     protected $primaryKey = 'ID_escena';
+
     public $timestamps = false;
 
     protected $fillable = [
         'ID_produccion',
-        'Numero_escena',
         'Descripcion',
-        'Ubicacion_descripcion',
-        'Personajes_intervienen',
+        'Tiempo_estimado',
         'Complejidad',
+        'Necesidades_especiales',
         'Estado',
-        'Observaciones'
     ];
 
     public function produccion(): BelongsTo
     {
-        return $this->belongsTo(Produccion::class, 'ID_produccion', 'ID_produccion');
+        return $this->belongsTo(
+            Produccion::class,
+            'ID_produccion',
+            'ID_produccion'
+        );
     }
 }

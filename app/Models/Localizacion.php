@@ -9,6 +9,7 @@ class Localizacion extends Model
 {
     protected $table = 'localizacion';
     protected $primaryKey = 'ID_localizacion';
+
     public $timestamps = false;
 
     protected $fillable = [
@@ -28,6 +29,10 @@ class Localizacion extends Model
 
     public function planes_rodaje(): HasMany
     {
-        return $this->hasMany(PlanRodaje::class, 'ID_localizacion', 'ID_localizacion');
+        return $this->hasMany(
+            PlanRodaje::class,
+            'ID_localizacion',
+            'ID_localizacion'
+        );
     }
 }

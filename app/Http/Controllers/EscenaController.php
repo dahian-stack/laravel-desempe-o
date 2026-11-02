@@ -8,59 +8,47 @@ use Illuminate\Http\Request;
 
 class EscenaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        $escenas = Escena::with('produccion')->orderBy('ID_escena', 'desc')->get();
+        $escenas = Escena::with('produccion')
+            ->orderBy('ID_escena', 'desc')
+            ->get();
 
         return view('escenas.index', compact('escenas'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         $producciones = Produccion::orderBy('Titulo')->get();
+
         return view('escenas.create', compact('producciones'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'ID_produccion'  => 'required|exists:Produccion,ID_produccion',
-            'Numero_escena'  => 'nullable|string|max:50',
-            'Descripcion'    => 'required|string',
-            'Ubicacion'      => 'nullable|string|max:255',
-            'Complejidad'    => 'nullable|string|max:50',
-            'Estado'         => 'nullable|string|max:50',
-            'Observaciones'  => 'nullable|string',
+            'ID_produccion'        => 'required|exists:produccion,ID_produccion',
+            'Descripcion'          => 'required|string',
+            'Tiempo_estimado'      => 'nullable|string|max:100',
+            'Complejidad'          => 'nullable|string|max:50',
+            'Necesidades_especiales' => 'nullable|string',
+            'Estado'               => 'nullable|string|max:50',
         ]);
 
         Escena::create($validated);
 
         return redirect()
             ->route('escenas.index')
-            ->with('success', '✅ Escena registrada correctamente.');
+            ->with('success', 'Escena registrada correctamente.');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show($id)
     {
         $escena = Escena::with('produccion')->findOrFail($id);
+
         return view('escenas.show', compact('escena'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit($id)
     {
         $escena = Escena::findOrFail($id);
@@ -69,33 +57,26 @@ class EscenaController extends Controller
         return view('escenas.edit', compact('escena', 'producciones'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, $id)
     {
         $escena = Escena::findOrFail($id);
 
         $validated = $request->validate([
-            'ID_produccion'  => 'required|exists:Produccion,ID_produccion',
-            'Numero_escena'  => 'nullable|string|max:50',
-            'Descripcion'    => 'required|string',
-            'Ubicacion'      => 'nullable|string|max:255',
-            'Complejidad'    => 'nullable|string|max:50',
-            'Estado'         => 'nullable|string|max:50',
-            'Observaciones'  => 'nullable|string',
+            'ID_produccion'        => 'required|exists:produccion,ID_produccion',
+            'Descripcion'          => 'required|string',
+            'Tiempo_estimado'      => 'nullable|string|max:100',
+            'Complejidad'          => 'nullable|string|max:50',
+            'Necesidades_especiales' => 'nullable|string',
+            'Estado'               => 'nullable|string|max:50',
         ]);
 
         $escena->update($validated);
 
         return redirect()
             ->route('escenas.index')
-            ->with('success', '✅ Escena actualizada correctamente.');
+            ->with('success', 'Escena actualizada correctamente.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy($id)
     {
         $escena = Escena::findOrFail($id);
@@ -103,6 +84,6 @@ class EscenaController extends Controller
 
         return redirect()
             ->route('escenas.index')
-            ->with('success', '✅ Escena eliminada correctamente.');
+            ->with('success', 'Escena eliminada correctamente.');
     }
 }

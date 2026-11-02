@@ -1,3 +1,4 @@
+
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -15,18 +16,59 @@
             </div>
 
             <div class="bg-white rounded-xl shadow-md p-6">
-                <h3 class="text-xl font-bold text-gray-800 mb-4">{{ $personal->Nombres }} {{ $personal->Apellidos }}</h3>
+                <h3 class="text-xl font-bold text-gray-800 mb-4">
+                    {{ $personal->Nombres }} {{ $personal->Apellidos }}
+                </h3>
 
                 <div class="space-y-3 text-gray-600">
-                    <p><strong class="text-gray-800">ID:</strong> {{ $personal->ID_personal }}</p>
-                    <p><strong class="text-gray-800">Especialidad:</strong> {{ $personal->Especialidad ?? '—' }}</p>
-                    <p><strong class="text-gray-800">Disponibilidad:</strong>
-                        <span class="bg-emerald-100 text-emerald-700 px-2.5 py-0.5 rounded-full text-xs font-medium">{{ $personal->Disponibilidad ?? '—' }}</span>
+                    <p>
+                        <strong class="text-gray-800">ID:</strong>
+                        {{ $personal->ID_personal }}
                     </p>
-                    <p><strong class="text-gray-800">Tarifa:</strong> ${{ number_format($personal->Tarifa ?? 0, 0, ',', '.') }}</p>
-                    <p><strong class="text-gray-800">Contacto:</strong> {{ $personal->Contacto ?? '—' }}</p>
-                    <p><strong class="text-gray-800">Experiencia:</strong></p>
-                    <p class="text-gray-600 bg-gray-50 p-3 rounded-lg">{{ $personal->Experiencia ?? 'Sin información' }}</p>
+
+                    <p>
+                        <strong class="text-gray-800">Especialidad:</strong>
+                        {{ $personal->Especialidad ?? '—' }}
+                    </p>
+
+                    <p>
+                        <strong class="text-gray-800">Disponibilidad:</strong>
+
+                        @php
+                            $colorDisponibilidad = match ($personal->Disponibilidad) {
+                                'Disponible' => 'bg-emerald-100 text-emerald-700',
+                                'Ocupado' => 'bg-amber-100 text-amber-700',
+                                'Indisponible' => 'bg-red-100 text-red-700',
+                                default => 'bg-gray-100 text-gray-700',
+                            };
+                        @endphp
+
+                        <span class="{{ $colorDisponibilidad }} px-2.5 py-0.5 rounded-full text-xs font-medium">
+                            {{ $personal->Disponibilidad ?? '—' }}
+                        </span>
+                    </p>
+
+                    <p>
+                        <strong class="text-gray-800">Tarifa:</strong>
+                        @if ($personal->Tarifa !== null)
+                            ${{ number_format($personal->Tarifa, 0, ',', '.') }}
+                        @else
+                            —
+                        @endif
+                    </p>
+
+                    <p>
+                        <strong class="text-gray-800">Contacto:</strong>
+                        {{ $personal->Contacto ?? '—' }}
+                    </p>
+
+                    <p>
+                        <strong class="text-gray-800">Experiencia:</strong>
+                    </p>
+
+                    <p class="text-gray-600 bg-gray-50 p-3 rounded-lg">
+                        {{ $personal->Experiencia ?? 'Sin información' }}
+                    </p>
                 </div>
 
                 @auth
@@ -34,8 +76,11 @@
                         <a href="{{ route('personales.edit', $personal->ID_personal) }}" class="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-lg transition-colors">
                             Editar
                         </a>
+
                         <form action="{{ route('personales.destroy', $personal->ID_personal) }}" method="POST" class="inline delete-form">
-                            @csrf @method('DELETE')
+                            @csrf
+                            @method('DELETE')
+
                             <button type="submit" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition-colors">
                                 Eliminar
                             </button>

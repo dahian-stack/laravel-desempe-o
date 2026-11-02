@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="es" data-bs-theme="light">
 
@@ -75,6 +76,7 @@
 
 <main class="flex-grow-1">
     <div class="container mt-5" style="max-width: 720px;">
+
         <h1 class="mb-4">🎬 Nueva Escena</h1>
 
         <form action="{{ route('escenas.store') }}" method="POST">
@@ -82,73 +84,119 @@
 
             <!-- Producción -->
             <div class="mb-3">
-                <label for="ID_produccion" class="form-label">Producción *</label>
-                <select id="ID_produccion" name="ID_produccion" class="form-select @error('ID_produccion') is-invalid @enderror" required>
+                <label for="ID_produccion" class="form-label">
+                    Producción *
+                </label>
+
+                <select
+                    id="ID_produccion"
+                    name="ID_produccion"
+                    class="form-select @error('ID_produccion') is-invalid @enderror"
+                    required
+                >
                     <option value="">Seleccionar producción</option>
+
                     @foreach ($producciones as $produccion)
-                        <option value="{{ $produccion->ID_produccion }}" {{ old('ID_produccion') == $produccion->ID_produccion ? 'selected' : '' }}>
+                        <option
+                            value="{{ $produccion->ID_produccion }}"
+                            {{ old('ID_produccion') == $produccion->ID_produccion ? 'selected' : '' }}
+                        >
                             {{ $produccion->Titulo }}
                         </option>
                     @endforeach
                 </select>
-                @error('ID_produccion')
-                <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
-            </div>
 
-            <!-- Número de Escena -->
-            <div class="mb-3">
-                <label for="Numero_escena" class="form-label">Número de Escena</label>
-                <input type="text" id="Numero_escena" name="Numero_escena"
-                       class="form-control @error('Numero_escena') is-invalid @enderror"
-                       value="{{ old('Numero_escena') }}" placeholder="Ej: ESC-001">
-                @error('Numero_escena')
+                @error('ID_produccion')
                 <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
 
             <!-- Descripción -->
             <div class="mb-3">
-                <label for="Descripcion" class="form-label">Descripción *</label>
-                <textarea id="Descripcion" name="Descripcion" rows="4"
-                          class="form-control @error('Descripcion') is-invalid @enderror" required>{{ old('Descripcion') }}</textarea>
+                <label for="Descripcion" class="form-label">
+                    Descripción *
+                </label>
+
+                <textarea
+                    id="Descripcion"
+                    name="Descripcion"
+                    rows="4"
+                    class="form-control @error('Descripcion') is-invalid @enderror"
+                    required
+                >{{ old('Descripcion') }}</textarea>
+
                 @error('Descripcion')
                 <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
 
-            <!-- Ubicación Descripción -->
+            <!-- Tiempo estimado -->
             <div class="mb-3">
-                <label for="Ubicacion_descripcion" class="form-label">Ubicación en la Escena</label>
-                <input type="text" id="Ubicacion_descripcion" name="Ubicacion_descripcion"
-                       class="form-control @error('Ubicacion_descripcion') is-invalid @enderror"
-                       value="{{ old('Ubicacion_descripcion') }}" placeholder="Ej: Sala principal, Exterior fachada...">
-                @error('Ubicacion_descripcion')
+                <label for="Tiempo_estimado" class="form-label">
+                    Tiempo estimado
+                </label>
+
+                <input
+                    type="text"
+                    id="Tiempo_estimado"
+                    name="Tiempo_estimado"
+                    class="form-control @error('Tiempo_estimado') is-invalid @enderror"
+                    value="{{ old('Tiempo_estimado') }}"
+                    placeholder="Ej: 2 horas"
+                >
+
+                @error('Tiempo_estimado')
                 <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
 
-            <!-- Personajes que intervienen -->
+            <!-- Necesidades especiales -->
             <div class="mb-3">
-                <label for="Personajes_intervienen" class="form-label">Personajes que Intervienen</label>
-                <textarea id="Personajes_intervienen" name="Personajes_intervienen" rows="2"
-                          class="form-control @error('Personajes_intervienen') is-invalid @enderror"
-                          placeholder="Listar los personajes que aparecen en esta escena">{{ old('Personajes_intervienen') }}</textarea>
-                @error('Personajes_intervienen')
+                <label for="Necesidades_especiales" class="form-label">
+                    Necesidades especiales
+                </label>
+
+                <textarea
+                    id="Necesidades_especiales"
+                    name="Necesidades_especiales"
+                    rows="3"
+                    class="form-control @error('Necesidades_especiales') is-invalid @enderror"
+                    placeholder="Describe los recursos o necesidades especiales de la escena"
+                >{{ old('Necesidades_especiales') }}</textarea>
+
+                @error('Necesidades_especiales')
                 <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
 
             <div class="row">
+
                 <!-- Complejidad -->
                 <div class="col-md-6 mb-3">
-                    <label for="Complejidad" class="form-label">Complejidad</label>
-                    <select id="Complejidad" name="Complejidad" class="form-select @error('Complejidad') is-invalid @enderror">
+                    <label for="Complejidad" class="form-label">
+                        Complejidad
+                    </label>
+
+                    <select
+                        id="Complejidad"
+                        name="Complejidad"
+                        class="form-select @error('Complejidad') is-invalid @enderror"
+                    >
                         <option value="">Seleccionar</option>
-                        <option value="Baja" {{ old('Complejidad') == 'Baja' ? 'selected' : '' }}>Baja</option>
-                        <option value="Media" {{ old('Complejidad') == 'Media' ? 'selected' : '' }}>Media</option>
-                        <option value="Alta" {{ old('Complejidad') == 'Alta' ? 'selected' : '' }}>Alta</option>
+
+                        <option value="Baja" {{ old('Complejidad') == 'Baja' ? 'selected' : '' }}>
+                            Baja
+                        </option>
+
+                        <option value="Media" {{ old('Complejidad') == 'Media' ? 'selected' : '' }}>
+                            Media
+                        </option>
+
+                        <option value="Alta" {{ old('Complejidad') == 'Alta' ? 'selected' : '' }}>
+                            Alta
+                        </option>
                     </select>
+
                     @error('Complejidad')
                     <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -156,32 +204,50 @@
 
                 <!-- Estado -->
                 <div class="col-md-6 mb-3">
-                    <label for="Estado" class="form-label">Estado</label>
-                    <select id="Estado" name="Estado" class="form-select @error('Estado') is-invalid @enderror">
+                    <label for="Estado" class="form-label">
+                        Estado
+                    </label>
+
+                    <select
+                        id="Estado"
+                        name="Estado"
+                        class="form-select @error('Estado') is-invalid @enderror"
+                    >
                         <option value="">Seleccionar</option>
-                        <option value="Pendiente" {{ old('Estado') == 'Pendiente' ? 'selected' : '' }}>Pendiente</option>
-                        <option value="En Rodaje" {{ old('Estado') == 'En Rodaje' ? 'selected' : '' }}>En Rodaje</option>
-                        <option value="Grabada" {{ old('Estado') == 'Grabada' ? 'selected' : '' }}>Grabada</option>
-                        <option value="Aprobada" {{ old('Estado') == 'Aprobada' ? 'selected' : '' }}>Aprobada</option>
+
+                        <option value="Pendiente" {{ old('Estado') == 'Pendiente' ? 'selected' : '' }}>
+                            Pendiente
+                        </option>
+
+                        <option value="En Rodaje" {{ old('Estado') == 'En Rodaje' ? 'selected' : '' }}>
+                            En Rodaje
+                        </option>
+
+                        <option value="Grabada" {{ old('Estado') == 'Grabada' ? 'selected' : '' }}>
+                            Grabada
+                        </option>
+
+                        <option value="Aprobada" {{ old('Estado') == 'Aprobada' ? 'selected' : '' }}>
+                            Aprobada
+                        </option>
                     </select>
+
                     @error('Estado')
                     <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
+
             </div>
 
-            <!-- Observaciones -->
-            <div class="mb-4">
-                <label for="Observaciones" class="form-label">Observaciones</label>
-                <textarea id="Observaciones" name="Observaciones" rows="3"
-                          class="form-control @error('Observaciones') is-invalid @enderror">{{ old('Observaciones') }}</textarea>
-                @error('Observaciones')
-                <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
-            </div>
+            <!-- Botones -->
+            <a href="{{ route('escenas.index') }}" class="btn btn-outline-secondary">
+                Cancelar
+            </a>
 
-            <a href="{{ route('escenas.index') }}" class="btn btn-outline-secondary">Cancelar</a>
-            <button type="submit" class="btn btn-primary">Guardar Escena</button>
+            <button type="submit" class="btn btn-primary">
+                Guardar Escena
+            </button>
+
         </form>
     </div>
 </main>
@@ -190,44 +256,63 @@
 <footer class="bg-primary text-white mt-5">
     <div class="container py-5">
         <div class="row gy-4">
+
             <div class="col-md-4">
                 <h5 class="mb-3">Mediapro</h5>
                 <p class="mb-0 small">
                     Gestión integral de producciones audiovisuales.
                 </p>
             </div>
+
             <div class="col-md-4">
                 <h6 class="text-uppercase mb-3">Navegación</h6>
+
                 <ul class="list-unstyled small">
                     <li class="mb-2">
-                        <a href="{{ url('/dashboard') }}" class="link-light text-decoration-none">Inicio</a>
+                        <a href="{{ url('/dashboard') }}" class="link-light text-decoration-none">
+                            Inicio
+                        </a>
                     </li>
+
                     <li class="mb-2">
-                        <a href="{{ route('clientes.index') }}" class="link-light text-decoration-none">Clientes</a>
+                        <a href="{{ route('clientes.index') }}" class="link-light text-decoration-none">
+                            Clientes
+                        </a>
                     </li>
+
                     <li class="mb-2">
-                        <a href="{{ route('producciones.index') }}" class="link-light text-decoration-none">Producciones</a>
+                        <a href="{{ route('producciones.index') }}" class="link-light text-decoration-none">
+                            Producciones
+                        </a>
                     </li>
+
                     <li class="mb-2">
-                        <a href="{{ route('personales.index') }}" class="link-light text-decoration-none">Personal</a>
+                        <a href="{{ route('personales.index') }}" class="link-light text-decoration-none">
+                            Personal
+                        </a>
                     </li>
                 </ul>
             </div>
+
             <div class="col-md-4">
                 <h6 class="text-uppercase mb-3">Contacto</h6>
+
                 <ul class="list-unstyled small">
                     <li class="mb-2">
                         <i class="bi bi-geo-alt-fill me-2"></i>
                         Envigado, Antioquia — Colombia
                     </li>
+
                     <li class="mb-2">
                         <i class="bi bi-envelope-fill me-2"></i>
                         contacto@mediapro.com
                     </li>
                 </ul>
             </div>
+
         </div>
     </div>
+
     <div class="border-top border-light border-opacity-25">
         <div class="container py-3 text-center small">
             &copy; {{ date('Y') }} Mediapro. Todos los derechos reservados.

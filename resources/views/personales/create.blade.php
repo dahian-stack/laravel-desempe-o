@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="es" data-bs-theme="light">
 
@@ -29,44 +30,28 @@
         <div class="container-fluid">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url('/dashboard') }}">
-                        Inicio
-                    </a>
+                    <a class="nav-link" href="{{ url('/dashboard') }}">Inicio</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('clientes.index') }}">
-                        Clientes
-                    </a>
+                    <a class="nav-link" href="{{ route('clientes.index') }}">Clientes</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('producciones.index') }}">
-                        Producciones
-                    </a>
+                    <a class="nav-link" href="{{ route('producciones.index') }}">Producciones</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="{{ route('personales.index') }}">
-                        Personal
-                    </a>
+                    <a class="nav-link active" href="{{ route('personales.index') }}">Personal</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('equipos_tecnicos.index') }}">
-                        Equipos Técnicos
-                    </a>
+                    <a class="nav-link" href="{{ route('equipos_tecnicos.index') }}">Equipos Técnicos</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('localizaciones.index') }}">
-                        Localizaciones
-                    </a>
+                    <a class="nav-link" href="{{ route('localizaciones.index') }}">Localizaciones</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('planes_rodaje.index') }}">
-                        Planes de Rodaje
-                    </a>
+                    <a class="nav-link" href="{{ route('planes_rodaje.index') }}">Planes de Rodaje</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('escenas.index') }}">
-                        Escenas
-                    </a>
+                    <a class="nav-link" href="{{ route('escenas.index') }}">Escenas</a>
                 </li>
             </ul>
         </div>
@@ -84,9 +69,14 @@
                 <!-- Nombres -->
                 <div class="col-md-6 mb-3">
                     <label for="Nombres" class="form-label">Nombres *</label>
-                    <input type="text" id="Nombres" name="Nombres"
-                           class="form-control @error('Nombres') is-invalid @enderror"
-                           value="{{ old('Nombres') }}" required>
+                    <input
+                        type="text"
+                        id="Nombres"
+                        name="Nombres"
+                        class="form-control @error('Nombres') is-invalid @enderror"
+                        value="{{ old('Nombres') }}"
+                        required
+                    >
                     @error('Nombres')
                     <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -95,9 +85,14 @@
                 <!-- Apellidos -->
                 <div class="col-md-6 mb-3">
                     <label for="Apellidos" class="form-label">Apellidos *</label>
-                    <input type="text" id="Apellidos" name="Apellidos"
-                           class="form-control @error('Apellidos') is-invalid @enderror"
-                           value="{{ old('Apellidos') }}" required>
+                    <input
+                        type="text"
+                        id="Apellidos"
+                        name="Apellidos"
+                        class="form-control @error('Apellidos') is-invalid @enderror"
+                        value="{{ old('Apellidos') }}"
+                        required
+                    >
                     @error('Apellidos')
                     <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -107,9 +102,14 @@
             <!-- Especialidad -->
             <div class="mb-3">
                 <label for="Especialidad" class="form-label">Especialidad</label>
-                <input type="text" id="Especialidad" name="Especialidad"
-                       class="form-control @error('Especialidad') is-invalid @enderror"
-                       value="{{ old('Especialidad') }}" placeholder="Ej: Cámara, Sonido, Dirección...">
+                <input
+                    type="text"
+                    id="Especialidad"
+                    name="Especialidad"
+                    class="form-control @error('Especialidad') is-invalid @enderror"
+                    value="{{ old('Especialidad') }}"
+                    placeholder="Ej: Cámara, Sonido, Dirección..."
+                >
                 @error('Especialidad')
                 <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
@@ -119,11 +119,21 @@
                 <!-- Disponibilidad -->
                 <div class="col-md-6 mb-3">
                     <label for="Disponibilidad" class="form-label">Disponibilidad</label>
-                    <select id="Disponibilidad" name="Disponibilidad" class="form-select @error('Disponibilidad') is-invalid @enderror">
+                    <select
+                        id="Disponibilidad"
+                        name="Disponibilidad"
+                        class="form-select @error('Disponibilidad') is-invalid @enderror"
+                    >
                         <option value="">Seleccionar</option>
-                        <option value="Disponible" {{ old('Disponibilidad') == 'Disponible' ? 'selected' : '' }}>Disponible</option>
-                        <option value="Ocupado" {{ old('Disponibilidad') == 'Ocupado' ? 'selected' : '' }}>Ocupado</option>
-                        <option value="Indisponible" {{ old('Disponibilidad') == 'Indisponible' ? 'selected' : '' }}>Indisponible</option>
+                        <option value="Disponible" {{ old('Disponibilidad') == 'Disponible' ? 'selected' : '' }}>
+                            Disponible
+                        </option>
+                        <option value="Ocupado" {{ old('Disponibilidad') == 'Ocupado' ? 'selected' : '' }}>
+                            Ocupado
+                        </option>
+                        <option value="Indisponible" {{ old('Disponibilidad') == 'Indisponible' ? 'selected' : '' }}>
+                            Indisponible
+                        </option>
                     </select>
                     @error('Disponibilidad')
                     <div class="invalid-feedback">{{ $message }}</div>
@@ -133,9 +143,15 @@
                 <!-- Tarifa -->
                 <div class="col-md-6 mb-3">
                     <label for="Tarifa" class="form-label">Tarifa ($)</label>
-                    <input type="number" id="Tarifa" name="Tarifa" step="0.01" min="0"
-                           class="form-control @error('Tarifa') is-invalid @enderror"
-                           value="{{ old('Tarifa') }}">
+                    <input
+                        type="number"
+                        id="Tarifa"
+                        name="Tarifa"
+                        step="0.01"
+                        min="0"
+                        class="form-control @error('Tarifa') is-invalid @enderror"
+                        value="{{ old('Tarifa') }}"
+                    >
                     @error('Tarifa')
                     <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -145,9 +161,14 @@
             <!-- Contacto -->
             <div class="mb-3">
                 <label for="Contacto" class="form-label">Contacto</label>
-                <input type="text" id="Contacto" name="Contacto"
-                       class="form-control @error('Contacto') is-invalid @enderror"
-                       value="{{ old('Contacto') }}" placeholder="Teléfono o correo">
+                <input
+                    type="text"
+                    id="Contacto"
+                    name="Contacto"
+                    class="form-control @error('Contacto') is-invalid @enderror"
+                    value="{{ old('Contacto') }}"
+                    placeholder="Teléfono o correo"
+                >
                 @error('Contacto')
                 <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
@@ -156,15 +177,24 @@
             <!-- Experiencia -->
             <div class="mb-4">
                 <label for="Experiencia" class="form-label">Experiencia</label>
-                <textarea id="Experiencia" name="Experiencia" rows="4"
-                          class="form-control @error('Experiencia') is-invalid @enderror">{{ old('Experiencia') }}</textarea>
+                <textarea
+                    id="Experiencia"
+                    name="Experiencia"
+                    rows="4"
+                    class="form-control @error('Experiencia') is-invalid @enderror"
+                >{{ old('Experiencia') }}</textarea>
                 @error('Experiencia')
                 <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
 
-            <a href="{{ route('personales.index') }}" class="btn btn-outline-secondary">Cancelar</a>
-            <button type="submit" class="btn btn-primary">Guardar Personal</button>
+            <a href="{{ route('personales.index') }}" class="btn btn-outline-secondary">
+                Cancelar
+            </a>
+
+            <button type="submit" class="btn btn-primary">
+                Guardar Personal
+            </button>
         </form>
     </div>
 </main>
@@ -179,6 +209,7 @@
                     Gestión integral de producciones audiovisuales.
                 </p>
             </div>
+
             <div class="col-md-4">
                 <h6 class="text-uppercase mb-3">Navegación</h6>
                 <ul class="list-unstyled small">
@@ -196,6 +227,7 @@
                     </li>
                 </ul>
             </div>
+
             <div class="col-md-4">
                 <h6 class="text-uppercase mb-3">Contacto</h6>
                 <ul class="list-unstyled small">
@@ -211,6 +243,7 @@
             </div>
         </div>
     </div>
+
     <div class="border-top border-light border-opacity-25">
         <div class="container py-3 text-center small">
             &copy; {{ date('Y') }} Mediapro. Todos los derechos reservados.

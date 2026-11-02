@@ -8,16 +8,15 @@ class EquipoTecnico extends Model
 {
     protected $table = 'equipo_tecnico';
     protected $primaryKey = 'ID_equipo';
+
     public $timestamps = false;
 
     protected $fillable = [
         'Categoria',
         'Marca',
         'Modelo',
-        'Numero_serie',
+        'Caracteristicas',
         'Estado',
         'Disponibilidad',
-        'Ubicacion',
-        'Observaciones'
     ];
 }

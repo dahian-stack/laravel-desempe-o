@@ -9,13 +9,11 @@ class LocalizacionController extends Controller
 {
     public function index()
     {
-        $localizaciones = Localizacion::orderBy('ID_localizacion', 'desc')->get();
+        $localizaciones = Localizacion::orderBy(
+            'ID_localizacion',
+            'desc'
+        )->get();
 
-        // Si la vista necesita $planes, lo incluimos:
-        // $planes = \App\Models\PlanRodaje::all();
-        // return view('localizaciones.index', compact('localizaciones', 'planes'));
-
-        // Si NO lo necesita, usa solo esto:
         return view('localizaciones.index', compact('localizaciones'));
     }
 
@@ -27,30 +25,38 @@ class LocalizacionController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'Nombre'      => 'required|string|max:255',
-            'Direccion'   => 'required|string|max:255',
-            'Tipo'        => 'nullable|string|max:50',
-            'Estado'      => 'nullable|string|max:50',
-            'Costo'       => 'nullable|numeric|min:0',
-            'Descripcion' => 'nullable|string',
+            'Nombre'          => 'required|string|max:255',
+            'Direccion'       => 'required|string|max:255',
+            'Coordenadas'     => 'nullable|string|max:255',
+            'Tipo'            => 'nullable|string|max:50',
+            'Propietario'     => 'nullable|string|max:255',
+            'Caracteristicas' => 'nullable|string',
+            'Permisos'        => 'nullable|string',
+            'Estado'          => 'nullable|string|max:50',
+            'Costo'           => 'nullable|numeric|min:0',
+            'Limitaciones'    => 'nullable|string',
+            'Facilidades'     => 'nullable|string',
+            'Accesibilidad'   => 'nullable|string',
         ]);
 
         Localizacion::create($validated);
 
         return redirect()
             ->route('localizaciones.index')
-            ->with('success', '✅ Localización registrada correctamente.');
+            ->with('success', 'Localización registrada correctamente.');
     }
 
     public function show($id)
     {
         $localizacion = Localizacion::findOrFail($id);
+
         return view('localizaciones.show', compact('localizacion'));
     }
 
     public function edit($id)
     {
         $localizacion = Localizacion::findOrFail($id);
+
         return view('localizaciones.edit', compact('localizacion'));
     }
 
@@ -59,28 +65,35 @@ class LocalizacionController extends Controller
         $localizacion = Localizacion::findOrFail($id);
 
         $validated = $request->validate([
-            'Nombre'      => 'required|string|max:255',
-            'Direccion'   => 'required|string|max:255',
-            'Tipo'        => 'nullable|string|max:50',
-            'Estado'      => 'nullable|string|max:50',
-            'Costo'       => 'nullable|numeric|min:0',
-            'Descripcion' => 'nullable|string',
+            'Nombre'          => 'required|string|max:255',
+            'Direccion'       => 'required|string|max:255',
+            'Coordenadas'     => 'nullable|string|max:255',
+            'Tipo'            => 'nullable|string|max:50',
+            'Propietario'     => 'nullable|string|max:255',
+            'Caracteristicas' => 'nullable|string',
+            'Permisos'        => 'nullable|string',
+            'Estado'          => 'nullable|string|max:50',
+            'Costo'           => 'nullable|numeric|min:0',
+            'Limitaciones'    => 'nullable|string',
+            'Facilidades'     => 'nullable|string',
+            'Accesibilidad'   => 'nullable|string',
         ]);
 
         $localizacion->update($validated);
 
         return redirect()
             ->route('localizaciones.index')
-            ->with('success', '✅ Localización actualizada correctamente.');
+            ->with('success', 'Localización actualizada correctamente.');
     }
 
     public function destroy($id)
     {
         $localizacion = Localizacion::findOrFail($id);
+
         $localizacion->delete();
 
         return redirect()
             ->route('localizaciones.index')
-            ->with('success', '✅ Localización eliminada correctamente.');
+            ->with('success', 'Localización eliminada correctamente.');
     }
 }

@@ -12,7 +12,12 @@ class PlanRodajeController extends Controller
 {
     public function index()
     {
-        $planes = PlanRodaje::with(['produccion', 'localizacion', 'personal'])->orderBy('ID_plan', 'desc')->get();
+        $planes = PlanRodaje::with([
+            'produccion',
+            'localizacion',
+            'personal'
+        ])->orderBy('ID_plan', 'desc')->get();
+
         return view('planes_rodaje.index', compact('planes'));
     }
 
@@ -21,41 +26,60 @@ class PlanRodajeController extends Controller
         $producciones = Produccion::orderBy('Titulo')->get();
         $localizaciones = Localizacion::orderBy('Nombre')->get();
         $personales = Personal::orderBy('Nombres')->get();
-        return view('planes_rodaje.create', compact('producciones', 'localizaciones', 'personales'));
+
+        return view('planes_rodaje.create', compact(
+            'producciones',
+            'localizaciones',
+            'personales'
+        ));
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'ID_produccion'   => 'required|exists:Produccion,ID_produccion',
-            'ID_localizacion' => 'required|exists:Localizacion,ID_localizacion',
-            'ID_personal'     => 'nullable|exists:Personal,ID_personal',
-            'Fecha'           => 'required|date',
-            'Hora_inicio'     => 'required|date_format:H:i',
-            'Hora_fin'        => 'required|date_format:H:i|after:Hora_inicio',
-            'Observaciones'   => 'nullable|string',
+            'ID_produccion'    => 'required|exists:produccion,ID_produccion',
+            'ID_localizacion'  => 'required|exists:localizacion,ID_localizacion',
+            'ID_personal'      => 'nullable|exists:personal,ID_personal',
+            'Fecha'            => 'required|date',
+            'Hora_inicio'      => 'required|date_format:H:i',
+            'Hora_fin'         => 'required|date_format:H:i|after:Hora_inicio',
+            'Eficiencia'       => 'nullable|string|max:255',
+            'Requerimientos'   => 'nullable|string',
+            'Plan_contingencia'=> 'nullable|string',
         ]);
 
         PlanRodaje::create($validated);
 
         return redirect()
             ->route('planes_rodaje.index')
-            ->with('success', '✅ Plan de rodaje registrado correctamente.');
+            ->with('success', 'Plan de rodaje registrado correctamente.');
     }
 
     public function show($id)
     {
-        $plan = PlanRodaje::with(['produccion', 'localizacion', 'personal'])->findOrFail($id);
+        $plan = PlanRodaje::with([
+            'produccion',
+            'localizacion',
+            'personal'
+        ])->findOrFail($id);
+
         return view('planes_rodaje.show', compact('plan'));
     }
 
     public function edit($id)
     {
         $plan = PlanRodaje::findOrFail($id);
+
         $producciones = Produccion::orderBy('Titulo')->get();
         $localizaciones = Localizacion::orderBy('Nombre')->get();
         $personales = Personal::orderBy('Nombres')->get();
-        return view('planes_rodaje.edit', compact('plan', 'producciones', 'localizaciones', 'personales'));
+
+        return view('planes_rodaje.edit', compact(
+            'plan',
+            'producciones',
+            'localizaciones',
+            'personales'
+        ));
     }
 
     public function update(Request $request, $id)
@@ -63,29 +87,32 @@ class PlanRodajeController extends Controller
         $plan = PlanRodaje::findOrFail($id);
 
         $validated = $request->validate([
-            'ID_produccion'   => 'required|exists:Produccion,ID_produccion',
-            'ID_localizacion' => 'required|exists:Localizacion,ID_localizacion',
-            'ID_personal'     => 'nullable|exists:Personal,ID_personal',
-            'Fecha'           => 'required|date',
-            'Hora_inicio'     => 'required|date_format:H:i',
-            'Hora_fin'        => 'required|date_format:H:i|after:Hora_inicio',
-            'Observaciones'   => 'nullable|string',
+            'ID_produccion'    => 'required|exists:produccion,ID_produccion',
+            'ID_localizacion'  => 'required|exists:localizacion,ID_localizacion',
+            'ID_personal'      => 'nullable|exists:personal,ID_personal',
+            'Fecha'            => 'required|date',
+            'Hora_inicio'      => 'required|date_format:H:i',
+            'Hora_fin'         => 'required|date_format:H:i|after:Hora_inicio',
+            'Eficiencia'       => 'nullable|string|max:255',
+            'Requerimientos'   => 'nullable|string',
+            'Plan_contingencia'=> 'nullable|string',
         ]);
 
         $plan->update($validated);
 
         return redirect()
             ->route('planes_rodaje.index')
-            ->with('success', '✅ Plan de rodaje actualizado correctamente.');
+            ->with('success', 'Plan de rodaje actualizado correctamente.');
     }
 
     public function destroy($id)
     {
         $plan = PlanRodaje::findOrFail($id);
+
         $plan->delete();
 
         return redirect()
             ->route('planes_rodaje.index')
-            ->with('success', '✅ Plan de rodaje eliminado correctamente.');
+            ->with('success', 'Plan de rodaje eliminado correctamente.');
     }
 }

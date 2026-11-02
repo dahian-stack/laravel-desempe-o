@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="es" data-bs-theme="light">
 
@@ -29,44 +30,28 @@
         <div class="container-fluid">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url('/dashboard') }}">
-                        Inicio
-                    </a>
+                    <a class="nav-link" href="{{ url('/dashboard') }}">Inicio</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('clientes.index') }}">
-                        Clientes
-                    </a>
+                    <a class="nav-link" href="{{ route('clientes.index') }}">Clientes</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('producciones.index') }}">
-                        Producciones
-                    </a>
+                    <a class="nav-link" href="{{ route('producciones.index') }}">Producciones</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('personales.index') }}">
-                        Personal
-                    </a>
+                    <a class="nav-link" href="{{ route('personales.index') }}">Personal</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('equipos_tecnicos.index') }}">
-                        Equipos Técnicos
-                    </a>
+                    <a class="nav-link" href="{{ route('equipos_tecnicos.index') }}">Equipos Técnicos</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('localizaciones.index') }}">
-                        Localizaciones
-                    </a>
+                    <a class="nav-link" href="{{ route('localizaciones.index') }}">Localizaciones</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="{{ route('planes_rodaje.index') }}">
-                        Planes de Rodaje
-                    </a>
+                    <a class="nav-link active" href="{{ route('planes_rodaje.index') }}">Planes de Rodaje</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('escenas.index') }}">
-                        Escenas
-                    </a>
+                    <a class="nav-link" href="{{ route('escenas.index') }}">Escenas</a>
                 </li>
             </ul>
         </div>
@@ -75,6 +60,7 @@
 
 <main class="flex-grow-1">
     <div class="container mt-5">
+
         <div class="text-center mb-5">
             <h1>📅 Planes de Rodaje</h1>
             <p class="lead">
@@ -84,12 +70,15 @@
 
         <!-- Botón para crear -->
         <div class="text-end mb-3">
-            <a href="{{ route('planes_rodaje.create') }}" class="btn btn-primary">+ Nuevo Plan</a>
+            <a href="{{ route('planes_rodaje.create') }}" class="btn btn-primary">
+                + Nuevo Plan
+            </a>
         </div>
 
         <!-- Listado -->
         <div class="table-responsive">
             <table class="table table-striped table-hover align-middle">
+
                 <thead class="table-primary">
                 <tr>
                     <th>#</th>
@@ -101,26 +90,67 @@
                     <th class="text-end">Acciones</th>
                 </tr>
                 </thead>
+
                 <tbody>
                 @forelse ($planes as $plan)
                     <tr>
                         <td>{{ $plan->ID_plan }}</td>
-                        <td><strong>{{ $plan->produccion->Titulo ?? '-' }}</strong></td>
-                        <td>{{ $plan->localizacion->Nombre ?? '-' }}</td>
-                        <td>{{ $plan->Fecha ? \Carbon\Carbon::parse($plan->Fecha)->format('d/m/Y') : '-' }}</td>
+
                         <td>
-                            {{ $plan->Hora_inicio ? \Carbon\Carbon::parse($plan->Hora_inicio)->format('H:i') : '-' }}
-                            —
-                            {{ $plan->Hora_fin ? \Carbon\Carbon::parse($plan->Hora_fin)->format('H:i') : '-' }}
+                            <strong>
+                                {{ $plan->produccion?->Titulo ?? '—' }}
+                            </strong>
                         </td>
-                        <td>{{ $plan->personal ? $plan->personal->Nombres . ' ' . $plan->personal->Apellidos : 'Sin asignar' }}</td>
+
+                        <td>
+                            {{ $plan->localizacion?->Nombre ?? '—' }}
+                        </td>
+
+                        <td>
+                            {{ $plan->Fecha ? \Carbon\Carbon::parse($plan->Fecha)->format('d/m/Y') : '—' }}
+                        </td>
+
+                        <td>
+                            {{ $plan->Hora_inicio ? \Carbon\Carbon::parse($plan->Hora_inicio)->format('H:i') : '—' }}
+                            —
+                            {{ $plan->Hora_fin ? \Carbon\Carbon::parse($plan->Hora_fin)->format('H:i') : '—' }}
+                        </td>
+
+                        <td>
+                            @if ($plan->personal)
+                                {{ $plan->personal->Nombres }}
+                                {{ $plan->personal->Apellidos }}
+                            @else
+                                <span class="text-muted">Sin asignar</span>
+                            @endif
+                        </td>
+
                         <td class="text-end">
-                            <a href="{{ route('planes_rodaje.show', $plan->ID_plan) }}" class="btn btn-sm btn-outline-secondary">Ver</a>
-                            <a href="{{ route('planes_rodaje.edit', $plan->ID_plan) }}" class="btn btn-sm btn-outline-primary">Editar</a>
-                            <form action="{{ route('planes_rodaje.destroy', $plan->ID_plan) }}" method="POST" class="d-inline form-eliminar">
+                            <a
+                                href="{{ route('planes_rodaje.show', $plan->ID_plan) }}"
+                                class="btn btn-sm btn-outline-secondary"
+                            >
+                                Ver
+                            </a>
+
+                            <a
+                                href="{{ route('planes_rodaje.edit', $plan->ID_plan) }}"
+                                class="btn btn-sm btn-outline-primary"
+                            >
+                                Editar
+                            </a>
+
+                            <form
+                                action="{{ route('planes_rodaje.destroy', $plan->ID_plan) }}"
+                                method="POST"
+                                class="d-inline form-eliminar"
+                            >
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-outline-danger">Eliminar</button>
+
+                                <button type="submit" class="btn btn-sm btn-outline-danger">
+                                    Eliminar
+                                </button>
                             </form>
                         </td>
                     </tr>
@@ -132,6 +162,7 @@
                     </tr>
                 @endforelse
                 </tbody>
+
             </table>
         </div>
     </div>
@@ -141,12 +172,14 @@
 <footer class="bg-primary text-white mt-5">
     <div class="container py-5">
         <div class="row gy-4">
+
             <div class="col-md-4">
                 <h5 class="mb-3">Mediapro</h5>
                 <p class="mb-0 small">
                     Gestión integral de producciones audiovisuales.
                 </p>
             </div>
+
             <div class="col-md-4">
                 <h6 class="text-uppercase mb-3">Navegación</h6>
                 <ul class="list-unstyled small">
@@ -164,6 +197,7 @@
                     </li>
                 </ul>
             </div>
+
             <div class="col-md-4">
                 <h6 class="text-uppercase mb-3">Contacto</h6>
                 <ul class="list-unstyled small">
@@ -177,8 +211,10 @@
                     </li>
                 </ul>
             </div>
+
         </div>
     </div>
+
     <div class="border-top border-light border-opacity-25">
         <div class="container py-3 text-center small">
             &copy; {{ date('Y') }} Mediapro. Todos los derechos reservados.

@@ -7,9 +7,6 @@ use Illuminate\Http\Request;
 
 class PersonalController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $personales = Personal::orderBy('ID_personal', 'desc')->get();
@@ -17,17 +14,11 @@ class PersonalController extends Controller
         return view('personales.index', compact('personales'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         return view('personales.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -45,30 +36,23 @@ class PersonalController extends Controller
 
         return redirect()
             ->route('personales.index')
-            ->with('success', '✅ Personal registrado correctamente.');
+            ->with('success', 'Personal registrado correctamente.');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show($id)
     {
         $personal = Personal::findOrFail($id);
+
         return view('personales.show', compact('personal'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit($id)
     {
         $personal = Personal::findOrFail($id);
+
         return view('personales.edit', compact('personal'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, $id)
     {
         $personal = Personal::findOrFail($id);
@@ -88,19 +72,17 @@ class PersonalController extends Controller
 
         return redirect()
             ->route('personales.index')
-            ->with('success', '✅ Personal actualizado correctamente.');
+            ->with('success', 'Personal actualizado correctamente.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy($id)
     {
         $personal = Personal::findOrFail($id);
+
         $personal->delete();
 
         return redirect()
             ->route('personales.index')
-            ->with('success', '✅ Personal eliminado correctamente.');
+            ->with('success', 'Personal eliminado correctamente.');
     }
 }

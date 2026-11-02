@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="es" data-bs-theme="light">
 
@@ -33,36 +34,43 @@
                         Inicio
                     </a>
                 </li>
+
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('clientes.index') }}">
                         Clientes
                     </a>
                 </li>
+
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('producciones.index') }}">
                         Producciones
                     </a>
                 </li>
+
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('personales.index') }}">
                         Personal
                     </a>
                 </li>
+
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('equipos_tecnicos.index') }}">
                         Equipos Técnicos
                     </a>
                 </li>
+
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('localizaciones.index') }}">
                         Localizaciones
                     </a>
                 </li>
+
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('planes_rodaje.index') }}">
                         Planes de Rodaje
                     </a>
                 </li>
+
                 <li class="nav-item">
                     <a class="nav-link active" href="{{ route('escenas.index') }}">
                         Escenas
@@ -75,6 +83,7 @@
 
 <main class="flex-grow-1">
     <div class="container mt-5">
+
         <div class="text-center mb-5">
             <h1>🎬 Escenas</h1>
             <p class="lead">
@@ -84,7 +93,9 @@
 
         <!-- Botón para crear -->
         <div class="text-end mb-3">
-            <a href="{{ route('escenas.create') }}" class="btn btn-primary">+ Nueva Escena</a>
+            <a href="{{ route('escenas.create') }}" class="btn btn-primary">
+                + Nueva Escena
+            </a>
         </div>
 
         <!-- Listado -->
@@ -94,25 +105,32 @@
                 <tr>
                     <th>#</th>
                     <th>Producción</th>
-                    <th>N° Escena</th>
                     <th>Descripción</th>
                     <th>Complejidad</th>
                     <th>Estado</th>
                     <th class="text-end">Acciones</th>
                 </tr>
                 </thead>
+
                 <tbody>
                 @forelse ($escenas as $escena)
                     <tr>
                         <td>{{ $escena->ID_escena }}</td>
-                        <td><strong>{{ $escena->produccion->Titulo ?? '-' }}</strong></td>
-                        <td>{{ $escena->Numero_escena ?? '-' }}</td>
+
+                        <td>
+                            <strong>
+                                {{ $escena->produccion->Titulo ?? '-' }}
+                            </strong>
+                        </td>
+
                         <td class="text-truncate" style="max-width: 180px;">
                             {{ $escena->Descripcion ?? '-' }}
                         </td>
+
                         <td>
                             @php
                                 $complejidad = $escena->Complejidad;
+
                                 $claseComp = match(true) {
                                     $complejidad === 'Baja' => 'bg-success',
                                     $complejidad === 'Media' => 'bg-warning text-dark',
@@ -120,11 +138,16 @@
                                     default => 'bg-secondary'
                                 };
                             @endphp
-                            <span class="badge {{ $claseComp }}">{{ $complejidad ?? '-' }}</span>
+
+                            <span class="badge {{ $claseComp }}">
+                                    {{ $complejidad ?? '-' }}
+                                </span>
                         </td>
+
                         <td>
                             @php
                                 $estado = $escena->Estado;
+
                                 $claseEstado = match(true) {
                                     $estado === 'Pendiente' => 'bg-secondary',
                                     $estado === 'En Rodaje' => 'bg-primary',
@@ -133,21 +156,45 @@
                                     default => 'bg-light text-dark'
                                 };
                             @endphp
-                            <span class="badge {{ $claseEstado }}">{{ $estado ?? '-' }}</span>
+
+                            <span class="badge {{ $claseEstado }}">
+                                    {{ $estado ?? '-' }}
+                                </span>
                         </td>
+
                         <td class="text-end">
-                            <a href="{{ route('escenas.show', $escena->ID_escena) }}" class="btn btn-sm btn-outline-secondary">Ver</a>
-                            <a href="{{ route('escenas.edit', $escena->ID_escena) }}" class="btn btn-sm btn-outline-primary">Editar</a>
-                            <form action="{{ route('escenas.destroy', $escena->ID_escena) }}" method="POST" class="d-inline form-eliminar">
+                            <a
+                                href="{{ route('escenas.show', $escena->ID_escena) }}"
+                                class="btn btn-sm btn-outline-secondary"
+                            >
+                                Ver
+                            </a>
+
+                            <a
+                                href="{{ route('escenas.edit', $escena->ID_escena) }}"
+                                class="btn btn-sm btn-outline-primary"
+                            >
+                                Editar
+                            </a>
+
+                            <form
+                                action="{{ route('escenas.destroy', $escena->ID_escena) }}"
+                                method="POST"
+                                class="d-inline form-eliminar"
+                            >
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-outline-danger">Eliminar</button>
+
+                                <button type="submit" class="btn btn-sm btn-outline-danger">
+                                    Eliminar
+                                </button>
                             </form>
                         </td>
                     </tr>
+
                 @empty
                     <tr>
-                        <td colspan="7" class="text-center text-muted py-4">
+                        <td colspan="6" class="text-center text-muted py-4">
                             Todavía no hay escenas registradas.
                         </td>
                     </tr>
@@ -155,6 +202,7 @@
                 </tbody>
             </table>
         </div>
+
     </div>
 </main>
 
@@ -162,44 +210,63 @@
 <footer class="bg-primary text-white mt-5">
     <div class="container py-5">
         <div class="row gy-4">
+
             <div class="col-md-4">
                 <h5 class="mb-3">Mediapro</h5>
                 <p class="mb-0 small">
                     Gestión integral de producciones audiovisuales.
                 </p>
             </div>
+
             <div class="col-md-4">
                 <h6 class="text-uppercase mb-3">Navegación</h6>
+
                 <ul class="list-unstyled small">
                     <li class="mb-2">
-                        <a href="{{ url('/dashboard') }}" class="link-light text-decoration-none">Inicio</a>
+                        <a href="{{ url('/dashboard') }}" class="link-light text-decoration-none">
+                            Inicio
+                        </a>
                     </li>
+
                     <li class="mb-2">
-                        <a href="{{ route('clientes.index') }}" class="link-light text-decoration-none">Clientes</a>
+                        <a href="{{ route('clientes.index') }}" class="link-light text-decoration-none">
+                            Clientes
+                        </a>
                     </li>
+
                     <li class="mb-2">
-                        <a href="{{ route('producciones.index') }}" class="link-light text-decoration-none">Producciones</a>
+                        <a href="{{ route('producciones.index') }}" class="link-light text-decoration-none">
+                            Producciones
+                        </a>
                     </li>
+
                     <li class="mb-2">
-                        <a href="{{ route('personales.index') }}" class="link-light text-decoration-none">Personal</a>
+                        <a href="{{ route('personales.index') }}" class="link-light text-decoration-none">
+                            Personal
+                        </a>
                     </li>
                 </ul>
             </div>
+
             <div class="col-md-4">
                 <h6 class="text-uppercase mb-3">Contacto</h6>
+
                 <ul class="list-unstyled small">
                     <li class="mb-2">
                         <i class="bi bi-geo-alt-fill me-2"></i>
                         Envigado, Antioquia — Colombia
                     </li>
+
                     <li class="mb-2">
                         <i class="bi bi-envelope-fill me-2"></i>
                         contacto@mediapro.com
                     </li>
                 </ul>
             </div>
+
         </div>
     </div>
+
     <div class="border-top border-light border-opacity-25">
         <div class="container py-3 text-center small">
             &copy; {{ date('Y') }} Mediapro. Todos los derechos reservados.

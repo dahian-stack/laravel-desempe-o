@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="es" data-bs-theme="light">
 
@@ -7,7 +8,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Bootstrap CSS v5.3.8 -->
+    <!-- Bootstrap CSS -->
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
         rel="stylesheet"
@@ -29,44 +30,28 @@
         <div class="container-fluid">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url('/dashboard') }}">
-                        Inicio
-                    </a>
+                    <a class="nav-link" href="{{ url('/dashboard') }}">Inicio</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="{{ route('clientes.index') }}">
-                        Clientes
-                    </a>
+                    <a class="nav-link active" href="{{ route('clientes.index') }}">Clientes</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('producciones.index') }}">
-                        Producciones
-                    </a>
+                    <a class="nav-link" href="{{ route('producciones.index') }}">Producciones</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('personales.index') }}">
-                        Personal
-                    </a>
+                    <a class="nav-link" href="{{ route('personales.index') }}">Personal</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('equipos_tecnicos.index') }}">
-                        Equipos Técnicos
-                    </a>
+                    <a class="nav-link" href="{{ route('equipos_tecnicos.index') }}">Equipos Técnicos</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('localizaciones.index') }}">
-                        Localizaciones
-                    </a>
+                    <a class="nav-link" href="{{ route('localizaciones.index') }}">Localizaciones</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('planes_rodaje.index') }}">
-                        Planes de Rodaje
-                    </a>
+                    <a class="nav-link" href="{{ route('planes_rodaje.index') }}">Planes de Rodaje</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('escenas.index') }}">
-                        Escenas
-                    </a>
+                    <a class="nav-link" href="{{ route('escenas.index') }}">Escenas</a>
                 </li>
             </ul>
         </div>
@@ -75,6 +60,7 @@
 
 <main class="flex-grow-1">
     <div class="container mt-5">
+
         <div class="text-center mb-5">
             <h1>👤 Clientes</h1>
             <p class="lead">
@@ -84,58 +70,73 @@
 
         <!-- Botón para crear -->
         <div class="text-end mb-3">
-            <a href="{{ route('clientes.create') }}" class="btn btn-primary">+ Nuevo Cliente</a>
+            <a href="{{ route('clientes.create') }}" class="btn btn-primary">
+                + Nuevo Cliente
+            </a>
         </div>
 
         <!-- Listado -->
         <div class="table-responsive">
             <table class="table table-striped table-hover align-middle">
+
                 <thead class="table-primary">
                 <tr>
                     <th>#</th>
                     <th>Nombre</th>
                     <th>Tipo</th>
                     <th>Contacto</th>
-                    <th>Teléfono</th>
-                    <th>Estado</th>
                     <th class="text-end">Acciones</th>
                 </tr>
                 </thead>
+
                 <tbody>
                 @forelse ($clientes as $cliente)
                     <tr>
                         <td>{{ $cliente->ID_cliente }}</td>
-                        <td><strong>{{ $cliente->Nombre }}</strong></td>
-                        <td>{{ $cliente->Tipo ?? '-' }}</td>
-                        <td>{{ $cliente->Contacto ?? '-' }}</td>
-                        <td>{{ $cliente->Telefono ?? '-' }}</td>
                         <td>
-                            @if ($cliente->Estado === 'Activo')
-                                <span class="badge bg-success">Activo</span>
-                            @elseif ($cliente->Estado === 'Inactivo')
-                                <span class="badge bg-secondary">Inactivo</span>
-                            @else
-                                <span class="badge bg-light text-dark">-</span>
-                            @endif
+                            <strong>{{ $cliente->nombre }}</strong>
                         </td>
+                        <td>{{ $cliente->tipo ?? '-' }}</td>
+                        <td>{{ $cliente->contacto ?? '-' }}</td>
+
                         <td class="text-end">
-                            <a href="{{ route('clientes.show', $cliente->ID_cliente) }}" class="btn btn-sm btn-outline-secondary">Ver</a>
-                            <a href="{{ route('clientes.edit', $cliente->ID_cliente) }}" class="btn btn-sm btn-outline-primary">Editar</a>
-                            <form action="{{ route('clientes.destroy', $cliente->ID_cliente) }}" method="POST" class="d-inline form-eliminar">
+                            <a
+                                href="{{ route('clientes.show', $cliente->ID_cliente) }}"
+                                class="btn btn-sm btn-outline-secondary"
+                            >
+                                Ver
+                            </a>
+
+                            <a
+                                href="{{ route('clientes.edit', $cliente->ID_cliente) }}"
+                                class="btn btn-sm btn-outline-primary"
+                            >
+                                Editar
+                            </a>
+
+                            <form
+                                action="{{ route('clientes.destroy', $cliente->ID_cliente) }}"
+                                method="POST"
+                                class="d-inline form-eliminar"
+                            >
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-outline-danger">Eliminar</button>
+
+                                <button type="submit" class="btn btn-sm btn-outline-danger">
+                                    Eliminar
+                                </button>
                             </form>
                         </td>
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="7" class="text-center text-muted py-4">
+                        <td colspan="5" class="text-center text-muted py-4">
                             Todavía no hay clientes registrados.
                         </td>
                     </tr>
                 @endforelse
                 </tbody>
+
             </table>
         </div>
     </div>
@@ -145,29 +146,40 @@
 <footer class="bg-primary text-white mt-5">
     <div class="container py-5">
         <div class="row gy-4">
+
             <div class="col-md-4">
                 <h5 class="mb-3">Mediapro</h5>
                 <p class="mb-0 small">
                     Gestión integral de producciones audiovisuales.
                 </p>
             </div>
+
             <div class="col-md-4">
                 <h6 class="text-uppercase mb-3">Navegación</h6>
                 <ul class="list-unstyled small">
                     <li class="mb-2">
-                        <a href="{{ url('/dashboard') }}" class="link-light text-decoration-none">Inicio</a>
+                        <a href="{{ url('/dashboard') }}" class="link-light text-decoration-none">
+                            Inicio
+                        </a>
                     </li>
                     <li class="mb-2">
-                        <a href="{{ route('clientes.index') }}" class="link-light text-decoration-none">Clientes</a>
+                        <a href="{{ route('clientes.index') }}" class="link-light text-decoration-none">
+                            Clientes
+                        </a>
                     </li>
                     <li class="mb-2">
-                        <a href="{{ route('producciones.index') }}" class="link-light text-decoration-none">Producciones</a>
+                        <a href="{{ route('producciones.index') }}" class="link-light text-decoration-none">
+                            Producciones
+                        </a>
                     </li>
                     <li class="mb-2">
-                        <a href="{{ route('personales.index') }}" class="link-light text-decoration-none">Personal</a>
+                        <a href="{{ route('personales.index') }}" class="link-light text-decoration-none">
+                            Personal
+                        </a>
                     </li>
                 </ul>
             </div>
+
             <div class="col-md-4">
                 <h6 class="text-uppercase mb-3">Contacto</h6>
                 <ul class="list-unstyled small">
@@ -181,8 +193,10 @@
                     </li>
                 </ul>
             </div>
+
         </div>
     </div>
+
     <div class="border-top border-light border-opacity-25">
         <div class="container py-3 text-center small">
             &copy; {{ date('Y') }} Mediapro. Todos los derechos reservados.

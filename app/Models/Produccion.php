@@ -18,8 +18,11 @@ class Produccion extends Model
         'ID_cliente',
         'Titulo',
         'Tipo',
+        'Genero',
         'Estado',
+        'Etapa',
         'Presupuesto_inicial',
+        'Presupuesto_gastado',
         'Fecha_inicio',
         'Fecha_fin',
         'Descripcion',
@@ -46,7 +49,7 @@ class Produccion extends Model
     public function planesRodaje()
     {
         return $this->hasMany(
-            PlanesRodaje::class,
+            PlanRodaje::class,
             'ID_produccion',
             'ID_produccion'
         );

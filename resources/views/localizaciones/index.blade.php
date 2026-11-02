@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="es" data-bs-theme="light">
 
@@ -7,7 +8,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Bootstrap CSS v5.3.8 -->
+    <!-- Bootstrap CSS -->
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
         rel="stylesheet"
@@ -29,44 +30,28 @@
         <div class="container-fluid">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url('/dashboard') }}">
-                        Inicio
-                    </a>
+                    <a class="nav-link" href="{{ url('/dashboard') }}">Inicio</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('clientes.index') }}">
-                        Clientes
-                    </a>
+                    <a class="nav-link" href="{{ route('clientes.index') }}">Clientes</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('producciones.index') }}">
-                        Producciones
-                    </a>
+                    <a class="nav-link" href="{{ route('producciones.index') }}">Producciones</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('personales.index') }}">
-                        Personal
-                    </a>
+                    <a class="nav-link" href="{{ route('personales.index') }}">Personal</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('equipos_tecnicos.index') }}">
-                        Equipos Técnicos
-                    </a>
+                    <a class="nav-link" href="{{ route('equipos_tecnicos.index') }}">Equipos Técnicos</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="{{ route('localizaciones.index') }}">
-                        Localizaciones
-                    </a>
+                    <a class="nav-link active" href="{{ route('localizaciones.index') }}">Localizaciones</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('planes_rodaje.index') }}">
-                        Planes de Rodaje
-                    </a>
+                    <a class="nav-link" href="{{ route('planes_rodaje.index') }}">Planes de Rodaje</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('escenas.index') }}">
-                        Escenas
-                    </a>
+                    <a class="nav-link" href="{{ route('escenas.index') }}">Escenas</a>
                 </li>
             </ul>
         </div>
@@ -75,6 +60,7 @@
 
 <main class="flex-grow-1">
     <div class="container mt-5">
+
         <div class="text-center mb-5">
             <h1>📍 Localizaciones</h1>
             <p class="lead">
@@ -84,7 +70,9 @@
 
         <!-- Botón para crear -->
         <div class="text-end mb-3">
-            <a href="{{ route('localizaciones.create') }}" class="btn btn-primary">+ Nueva Localización</a>
+            <a href="{{ route('localizaciones.create') }}" class="btn btn-primary">
+                + Nueva Localización
+            </a>
         </div>
 
         <!-- Listado -->
@@ -101,16 +89,24 @@
                     <th class="text-end">Acciones</th>
                 </tr>
                 </thead>
+
                 <tbody>
                 @forelse ($localizaciones as $localizacion)
                     <tr>
                         <td>{{ $localizacion->ID_localizacion }}</td>
-                        <td><strong>{{ $localizacion->Nombre }}</strong></td>
+
+                        <td>
+                            <strong>{{ $localizacion->Nombre }}</strong>
+                        </td>
+
                         <td>{{ $localizacion->Direccion }}</td>
+
                         <td>{{ $localizacion->Tipo ?? '-' }}</td>
+
                         <td>
                             @php
                                 $estado = $localizacion->Estado;
+
                                 $clase = match(true) {
                                     $estado === 'Disponible' => 'bg-success',
                                     $estado === 'Ocupada' => 'bg-danger',
@@ -118,22 +114,46 @@
                                     default => 'bg-secondary'
                                 };
                             @endphp
-                            <span class="badge {{ $clase }}">{{ $estado ?? '-' }}</span>
+
+                            <span class="badge {{ $clase }}">
+                                    {{ $estado ?? '-' }}
+                                </span>
                         </td>
+
                         <td class="text-end">
-                            @if ($localizacion->Costo)
+                            @if ($localizacion->Costo !== null)
                                 $ {{ number_format($localizacion->Costo, 0, ',', '.') }}
                             @else
                                 -
                             @endif
                         </td>
+
                         <td class="text-end">
-                            <a href="{{ route('localizaciones.show', $localizacion->ID_localizacion) }}" class="btn btn-sm btn-outline-secondary">Ver</a>
-                            <a href="{{ route('localizaciones.edit', $localizacion->ID_localizacion) }}" class="btn btn-sm btn-outline-primary">Editar</a>
-                            <form action="{{ route('localizaciones.destroy', $localizacion->ID_localizacion) }}" method="POST" class="d-inline form-eliminar">
+                            <a
+                                href="{{ route('localizaciones.show', $localizacion->ID_localizacion) }}"
+                                class="btn btn-sm btn-outline-secondary"
+                            >
+                                Ver
+                            </a>
+
+                            <a
+                                href="{{ route('localizaciones.edit', $localizacion->ID_localizacion) }}"
+                                class="btn btn-sm btn-outline-primary"
+                            >
+                                Editar
+                            </a>
+
+                            <form
+                                action="{{ route('localizaciones.destroy', $localizacion->ID_localizacion) }}"
+                                method="POST"
+                                class="d-inline form-eliminar"
+                            >
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-outline-danger">Eliminar</button>
+
+                                <button type="submit" class="btn btn-sm btn-outline-danger">
+                                    Eliminar
+                                </button>
                             </form>
                         </td>
                     </tr>
@@ -154,12 +174,14 @@
 <footer class="bg-primary text-white mt-5">
     <div class="container py-5">
         <div class="row gy-4">
+
             <div class="col-md-4">
                 <h5 class="mb-3">Mediapro</h5>
                 <p class="mb-0 small">
                     Gestión integral de producciones audiovisuales.
                 </p>
             </div>
+
             <div class="col-md-4">
                 <h6 class="text-uppercase mb-3">Navegación</h6>
                 <ul class="list-unstyled small">
@@ -177,6 +199,7 @@
                     </li>
                 </ul>
             </div>
+
             <div class="col-md-4">
                 <h6 class="text-uppercase mb-3">Contacto</h6>
                 <ul class="list-unstyled small">
@@ -190,8 +213,10 @@
                     </li>
                 </ul>
             </div>
+
         </div>
     </div>
+
     <div class="border-top border-light border-opacity-25">
         <div class="container py-3 text-center small">
             &copy; {{ date('Y') }} Mediapro. Todos los derechos reservados.

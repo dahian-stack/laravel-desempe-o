@@ -13,7 +13,9 @@ class ProduccionController extends Controller
      */
     public function index()
     {
-        $producciones = Produccion::with('cliente')->orderBy('ID_produccion', 'desc')->get();
+        $producciones = Produccion::with('cliente')
+            ->orderBy('ID_produccion', 'desc')
+            ->get();
 
         return view('producciones.index', compact('producciones'));
     }
@@ -24,6 +26,7 @@ class ProduccionController extends Controller
     public function create()
     {
         $clientes = Cliente::orderBy('Nombre')->get();
+
         return view('producciones.create', compact('clientes'));
     }
 
@@ -33,21 +36,24 @@ class ProduccionController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'ID_cliente'    => 'required|exists:Cliente,ID_cliente',
-            'Titulo'        => 'required|string|max:255',
-            'Tipo'          => 'nullable|string|max:50',
-            'Estado'        => 'nullable|string|max:50',
-            'Presupuesto'   => 'nullable|numeric|min:0',
-            'Fecha_inicio'  => 'nullable|date',
-            'Fecha_fin'     => 'nullable|date|after:Fecha_inicio',
-            'Descripcion'   => 'nullable|string',
+            'ID_cliente'          => 'required|exists:cliente,ID_cliente',
+            'Titulo'              => 'required|string|max:255',
+            'Tipo'                => 'nullable|string|max:50',
+            'Genero'              => 'nullable|string|max:50',
+            'Estado'              => 'nullable|string|max:50',
+            'Etapa'               => 'nullable|string|max:50',
+            'Presupuesto_inicial' => 'nullable|numeric|min:0',
+            'Presupuesto_gastado' => 'nullable|numeric|min:0',
+            'Fecha_inicio'        => 'nullable|date',
+            'Fecha_fin'           => 'nullable|date|after_or_equal:Fecha_inicio',
+            'Descripcion'         => 'nullable|string',
         ]);
 
         Produccion::create($validated);
 
         return redirect()
             ->route('producciones.index')
-            ->with('success', '✅ Producción creada correctamente.');
+            ->with('success', 'Producción creada correctamente.');
     }
 
     /**
@@ -56,6 +62,7 @@ class ProduccionController extends Controller
     public function show($id)
     {
         $produccion = Produccion::with('cliente')->findOrFail($id);
+
         return view('producciones.show', compact('produccion'));
     }
 
@@ -78,21 +85,24 @@ class ProduccionController extends Controller
         $produccion = Produccion::findOrFail($id);
 
         $validated = $request->validate([
-            'ID_cliente'    => 'required|exists:Cliente,ID_cliente',
-            'Titulo'        => 'required|string|max:255',
-            'Tipo'          => 'nullable|string|max:50',
-            'Estado'        => 'nullable|string|max:50',
-            'Presupuesto'   => 'nullable|numeric|min:0',
-            'Fecha_inicio'  => 'nullable|date',
-            'Fecha_fin'     => 'nullable|date|after:Fecha_inicio',
-            'Descripcion'   => 'nullable|string',
+            'ID_cliente'          => 'required|exists:cliente,ID_cliente',
+            'Titulo'              => 'required|string|max:255',
+            'Tipo'                => 'nullable|string|max:50',
+            'Genero'              => 'nullable|string|max:50',
+            'Estado'              => 'nullable|string|max:50',
+            'Etapa'               => 'nullable|string|max:50',
+            'Presupuesto_inicial' => 'nullable|numeric|min:0',
+            'Presupuesto_gastado' => 'nullable|numeric|min:0',
+            'Fecha_inicio'        => 'nullable|date',
+            'Fecha_fin'           => 'nullable|date|after_or_equal:Fecha_inicio',
+            'Descripcion'         => 'nullable|string',
         ]);
 
         $produccion->update($validated);
 
         return redirect()
             ->route('producciones.index')
-            ->with('success', '✅ Producción actualizada correctamente.');
+            ->with('success', 'Producción actualizada correctamente.');
     }
 
     /**
@@ -105,6 +115,6 @@ class ProduccionController extends Controller
 
         return redirect()
             ->route('producciones.index')
-            ->with('success', '✅ Producción eliminada correctamente.');
+            ->with('success', 'Producción eliminada correctamente.');
     }
 }

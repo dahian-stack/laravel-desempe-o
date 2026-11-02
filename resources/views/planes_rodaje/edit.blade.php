@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="es" data-bs-theme="light">
 
@@ -29,44 +30,28 @@
         <div class="container-fluid">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url('/dashboard') }}">
-                        Inicio
-                    </a>
+                    <a class="nav-link" href="{{ url('/dashboard') }}">Inicio</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('clientes.index') }}">
-                        Clientes
-                    </a>
+                    <a class="nav-link" href="{{ route('clientes.index') }}">Clientes</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('producciones.index') }}">
-                        Producciones
-                    </a>
+                    <a class="nav-link" href="{{ route('producciones.index') }}">Producciones</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('personales.index') }}">
-                        Personal
-                    </a>
+                    <a class="nav-link" href="{{ route('personales.index') }}">Personal</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('equipos_tecnicos.index') }}">
-                        Equipos Técnicos
-                    </a>
+                    <a class="nav-link" href="{{ route('equipos_tecnicos.index') }}">Equipos Técnicos</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('localizaciones.index') }}">
-                        Localizaciones
-                    </a>
+                    <a class="nav-link" href="{{ route('localizaciones.index') }}">Localizaciones</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="{{ route('planes_rodaje.index') }}">
-                        Planes de Rodaje
-                    </a>
+                    <a class="nav-link active" href="{{ route('planes_rodaje.index') }}">Planes de Rodaje</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('escenas.index') }}">
-                        Escenas
-                    </a>
+                    <a class="nav-link" href="{{ route('escenas.index') }}">Escenas</a>
                 </li>
             </ul>
         </div>
@@ -83,16 +68,28 @@
 
             <!-- Producción -->
             <div class="mb-3">
-                <label for="ID_produccion" class="form-label">Producción *</label>
-                <select id="ID_produccion" name="ID_produccion" class="form-select @error('ID_produccion') is-invalid @enderror" required>
+                <label for="ID_produccion" class="form-label">
+                    Producción *
+                </label>
+
+                <select
+                    id="ID_produccion"
+                    name="ID_produccion"
+                    class="form-select @error('ID_produccion') is-invalid @enderror"
+                    required
+                >
                     <option value="">Seleccionar producción</option>
+
                     @foreach ($producciones as $produccion)
-                        <option value="{{ $produccion->ID_produccion }}"
-                            {{ old('ID_produccion', $plan->ID_produccion) == $produccion->ID_produccion ? 'selected' : '' }}>
+                        <option
+                            value="{{ $produccion->ID_produccion }}"
+                            {{ old('ID_produccion', $plan->ID_produccion) == $produccion->ID_produccion ? 'selected' : '' }}
+                        >
                             {{ $produccion->Titulo }}
                         </option>
                     @endforeach
                 </select>
+
                 @error('ID_produccion')
                 <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
@@ -100,33 +97,56 @@
 
             <!-- Localización -->
             <div class="mb-3">
-                <label for="ID_localizacion" class="form-label">Localización *</label>
-                <select id="ID_localizacion" name="ID_localizacion" class="form-select @error('ID_localizacion') is-invalid @enderror" required>
+                <label for="ID_localizacion" class="form-label">
+                    Localización *
+                </label>
+
+                <select
+                    id="ID_localizacion"
+                    name="ID_localizacion"
+                    class="form-select @error('ID_localizacion') is-invalid @enderror"
+                    required
+                >
                     <option value="">Seleccionar localización</option>
+
                     @foreach ($localizaciones as $localizacion)
-                        <option value="{{ $localizacion->ID_localizacion }}"
-                            {{ old('ID_localizacion', $plan->ID_localizacion) == $localizacion->ID_localizacion ? 'selected' : '' }}>
+                        <option
+                            value="{{ $localizacion->ID_localizacion }}"
+                            {{ old('ID_localizacion', $plan->ID_localizacion) == $localizacion->ID_localizacion ? 'selected' : '' }}
+                        >
                             {{ $localizacion->Nombre }} — {{ $localizacion->Direccion }}
                         </option>
                     @endforeach
                 </select>
+
                 @error('ID_localizacion')
                 <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
 
-            <!-- Personal Asignado -->
+            <!-- Personal asignado -->
             <div class="mb-3">
-                <label for="ID_personal" class="form-label">Personal Responsable</label>
-                <select id="ID_personal" name="ID_personal" class="form-select @error('ID_personal') is-invalid @enderror">
+                <label for="ID_personal" class="form-label">
+                    Personal Responsable
+                </label>
+
+                <select
+                    id="ID_personal"
+                    name="ID_personal"
+                    class="form-select @error('ID_personal') is-invalid @enderror"
+                >
                     <option value="">Sin asignar</option>
+
                     @foreach ($personales as $personal)
-                        <option value="{{ $personal->ID_personal }}"
-                            {{ old('ID_personal', $plan->ID_personal) == $personal->ID_personal ? 'selected' : '' }}>
+                        <option
+                            value="{{ $personal->ID_personal }}"
+                            {{ old('ID_personal', $plan->ID_personal) == $personal->ID_personal ? 'selected' : '' }}
+                        >
                             {{ $personal->Nombres }} {{ $personal->Apellidos }} — {{ $personal->Especialidad }}
                         </option>
                     @endforeach
                 </select>
+
                 @error('ID_personal')
                 <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
@@ -134,52 +154,131 @@
 
             <!-- Fecha -->
             <div class="mb-3">
-                <label for="Fecha" class="form-label">Fecha de Rodaje *</label>
-                <input type="date" id="Fecha" name="Fecha"
-                       class="form-control @error('Fecha') is-invalid @enderror"
-                       value="{{ old('Fecha', $plan->Fecha) }}" required>
+                <label for="Fecha" class="form-label">
+                    Fecha de Rodaje *
+                </label>
+
+                <input
+                    type="date"
+                    id="Fecha"
+                    name="Fecha"
+                    class="form-control @error('Fecha') is-invalid @enderror"
+                    value="{{ old('Fecha', $plan->Fecha) }}"
+                    required
+                >
+
                 @error('Fecha')
                 <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
 
             <div class="row">
-                <!-- Hora Inicio -->
+                <!-- Hora de inicio -->
                 <div class="col-md-6 mb-3">
-                    <label for="Hora_inicio" class="form-label">Hora de Inicio *</label>
-                    <input type="time" id="Hora_inicio" name="Hora_inicio"
-                           class="form-control @error('Hora_inicio') is-invalid @enderror"
-                           value="{{ old('Hora_inicio', $plan->Hora_inicio) }}" required>
+                    <label for="Hora_inicio" class="form-label">
+                        Hora de Inicio *
+                    </label>
+
+                    <input
+                        type="time"
+                        id="Hora_inicio"
+                        name="Hora_inicio"
+                        class="form-control @error('Hora_inicio') is-invalid @enderror"
+                        value="{{ old('Hora_inicio', $plan->Hora_inicio) }}"
+                        required
+                    >
+
                     @error('Hora_inicio')
                     <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
 
-                <!-- Hora Fin -->
+                <!-- Hora de finalización -->
                 <div class="col-md-6 mb-3">
-                    <label for="Hora_fin" class="form-label">Hora de Finalización *</label>
-                    <input type="time" id="Hora_fin" name="Hora_fin"
-                           class="form-control @error('Hora_fin') is-invalid @enderror"
-                           value="{{ old('Hora_fin', $plan->Hora_fin) }}" required>
+                    <label for="Hora_fin" class="form-label">
+                        Hora de Finalización *
+                    </label>
+
+                    <input
+                        type="time"
+                        id="Hora_fin"
+                        name="Hora_fin"
+                        class="form-control @error('Hora_fin') is-invalid @enderror"
+                        value="{{ old('Hora_fin', $plan->Hora_fin) }}"
+                        required
+                    >
+
                     @error('Hora_fin')
                     <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
             </div>
 
-            <!-- Observaciones -->
-            <div class="mb-4">
-                <label for="Observaciones" class="form-label">Observaciones</label>
-                <textarea id="Observaciones" name="Observaciones" rows="4"
-                          class="form-control @error('Observaciones') is-invalid @enderror"
-                          placeholder="Detalles importantes, equipo necesario, notas de producción...">{{ old('Observaciones', $plan->Observaciones) }}</textarea>
-                @error('Observaciones')
+            <!-- Eficiencia -->
+            <div class="mb-3">
+                <label for="Eficiencia" class="form-label">
+                    Eficiencia
+                </label>
+
+                <input
+                    type="text"
+                    id="Eficiencia"
+                    name="Eficiencia"
+                    class="form-control @error('Eficiencia') is-invalid @enderror"
+                    value="{{ old('Eficiencia', $plan->Eficiencia) }}"
+                    placeholder="Ej. Alta, media o baja"
+                >
+
+                @error('Eficiencia')
                 <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
 
-            <a href="{{ route('planes_rodaje.index') }}" class="btn btn-outline-secondary">Cancelar</a>
-            <button type="submit" class="btn btn-primary">Actualizar Plan</button>
+            <!-- Requerimientos -->
+            <div class="mb-3">
+                <label for="Requerimientos" class="form-label">
+                    Requerimientos
+                </label>
+
+                <textarea
+                    id="Requerimientos"
+                    name="Requerimientos"
+                    rows="4"
+                    class="form-control @error('Requerimientos') is-invalid @enderror"
+                    placeholder="Describe los recursos o necesidades para el rodaje..."
+                >{{ old('Requerimientos', $plan->Requerimientos) }}</textarea>
+
+                @error('Requerimientos')
+                <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <!-- Plan de contingencia -->
+            <div class="mb-4">
+                <label for="Plan_contingencia" class="form-label">
+                    Plan de Contingencia
+                </label>
+
+                <textarea
+                    id="Plan_contingencia"
+                    name="Plan_contingencia"
+                    rows="4"
+                    class="form-control @error('Plan_contingencia') is-invalid @enderror"
+                    placeholder="Describe las alternativas ante posibles inconvenientes..."
+                >{{ old('Plan_contingencia', $plan->Plan_contingencia) }}</textarea>
+
+                @error('Plan_contingencia')
+                <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <a href="{{ route('planes_rodaje.index') }}" class="btn btn-outline-secondary">
+                Cancelar
+            </a>
+
+            <button type="submit" class="btn btn-primary">
+                Actualizar Plan
+            </button>
         </form>
     </div>
 </main>
@@ -194,6 +293,7 @@
                     Gestión integral de producciones audiovisuales.
                 </p>
             </div>
+
             <div class="col-md-4">
                 <h6 class="text-uppercase mb-3">Navegación</h6>
                 <ul class="list-unstyled small">
@@ -211,6 +311,7 @@
                     </li>
                 </ul>
             </div>
+
             <div class="col-md-4">
                 <h6 class="text-uppercase mb-3">Contacto</h6>
                 <ul class="list-unstyled small">
@@ -226,6 +327,7 @@
             </div>
         </div>
     </div>
+
     <div class="border-top border-light border-opacity-25">
         <div class="container py-3 text-center small">
             &copy; {{ date('Y') }} Mediapro. Todos los derechos reservados.

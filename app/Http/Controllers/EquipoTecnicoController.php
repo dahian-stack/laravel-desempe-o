@@ -10,6 +10,7 @@ class EquipoTecnicoController extends Controller
     public function index()
     {
         $equipos = EquipoTecnico::orderBy('ID_equipo', 'desc')->get();
+
         return view('equipos_tecnicos.index', compact('equipos'));
     }
 
@@ -27,26 +28,26 @@ class EquipoTecnicoController extends Controller
             'Caracteristicas' => 'nullable|string',
             'Estado'          => 'nullable|string|max:50',
             'Disponibilidad'  => 'nullable|string|max:50',
-            'Ubicacion'       => 'nullable|string|max:100',
-            'Observaciones'   => 'nullable|string',
         ]);
 
         EquipoTecnico::create($validated);
 
         return redirect()
             ->route('equipos_tecnicos.index')
-            ->with('success', '✅ Equipo registrado correctamente.');
+            ->with('success', 'Equipo registrado correctamente.');
     }
 
     public function show($id)
     {
         $equipo = EquipoTecnico::findOrFail($id);
+
         return view('equipos_tecnicos.show', compact('equipo'));
     }
 
     public function edit($id)
     {
         $equipo = EquipoTecnico::findOrFail($id);
+
         return view('equipos_tecnicos.edit', compact('equipo'));
     }
 
@@ -61,24 +62,23 @@ class EquipoTecnicoController extends Controller
             'Caracteristicas' => 'nullable|string',
             'Estado'          => 'nullable|string|max:50',
             'Disponibilidad'  => 'nullable|string|max:50',
-            'Ubicacion'       => 'nullable|string|max:100',
-            'Observaciones'   => 'nullable|string',
         ]);
 
         $equipo->update($validated);
 
         return redirect()
             ->route('equipos_tecnicos.index')
-            ->with('success', '✅ Equipo actualizado correctamente.');
+            ->with('success', 'Equipo actualizado correctamente.');
     }
 
     public function destroy($id)
     {
         $equipo = EquipoTecnico::findOrFail($id);
+
         $equipo->delete();
 
         return redirect()
             ->route('equipos_tecnicos.index')
-            ->with('success', '✅ Equipo eliminado correctamente.');
+            ->with('success', 'Equipo eliminado correctamente.');
     }
 }
