@@ -46,3 +46,12 @@ Route::middleware('auth')->group(function () {
 
 // Rutas de autenticación (Breeze)
 require __DIR__.'/auth.php';
+
+Route::get('/diagnostico-sesion', function (\Illuminate\Http\Request $request) {
+    $request->session()->put('prueba_sesion', 'funciona');
+
+    return response()->json([
+        'session_id' => $request->session()->getId(),
+        'session_value' => $request->session()->get('prueba_sesion'),
+    ]);
+});
