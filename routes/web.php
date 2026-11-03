@@ -52,11 +52,8 @@ Route::get('/diagnostico-sesion', function (\Illuminate\Http\Request $request) {
 
     return response()->json([
         'driver' => config('session.driver'),
-        'cookie' => config('session.cookie'),
         'sesion_iniciada' => $request->session()->isStarted(),
-        'middleware_ruta' => $request->route()->gatherMiddleware(),
-        'middleware_ejecutado' => app('router')->gatherRouteMiddleware(
-            $request->route()
-        ),
-    ]);
+    ])->withCookie(
+        cookie('prueba-cookie', 'valor', 10)
+    );
 });
