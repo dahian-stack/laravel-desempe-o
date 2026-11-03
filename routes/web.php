@@ -53,7 +53,13 @@ Route::get('/diagnostico-sesion', function (\Illuminate\Http\Request $request) {
     return response()->json([
         'driver' => config('session.driver'),
         'sesion_iniciada' => $request->session()->isStarted(),
-    ])->withCookie(
-        cookie('prueba-cookie', 'valor', 10)
+    ])->cookie(
+        'prueba-cookie',
+        'funciona',
+        10,
+        '/',
+        null,
+        true,
+        true
     );
 });
