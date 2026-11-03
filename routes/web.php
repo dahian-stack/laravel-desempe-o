@@ -51,6 +51,7 @@ Route::get('/diagnostico-sesion', function (\Illuminate\Http\Request $request) {
     $request->session()->put('diagnostico', now()->timestamp);
 
     return response()->json([
+        'version_prueba' => 'cookie-manual-2026-11-02',
         'driver' => config('session.driver'),
         'sesion_iniciada' => $request->session()->isStarted(),
     ])->cookie(
