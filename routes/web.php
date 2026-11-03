@@ -48,6 +48,8 @@ Route::middleware('auth')->group(function () {
 require __DIR__.'/auth.php';
 
 Route::get('/diagnostico-sesion', function (\Illuminate\Http\Request $request) {
+    $request->session()->put('diagnostico', now()->timestamp);
+
     return response()->json([
         'tiene_sesion' => $request->hasSession(),
         'session_driver' => config('session.driver'),
