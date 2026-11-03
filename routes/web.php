@@ -48,14 +48,11 @@ Route::middleware('auth')->group(function () {
 require __DIR__.'/auth.php';
 
 Route::get('/diagnostico-sesion', function (\Illuminate\Http\Request $request) {
-    $valorAnterior = $request->session()->get('contador', 0);
-    $valorNuevo = $valorAnterior + 1;
-
-    $request->session()->put('contador', $valorNuevo);
-
     return response()->json([
-        'session_id' => $request->session()->getId(),
-        'valor_anterior' => $valorAnterior,
-        'valor_actual' => $valorNuevo,
+        'tiene_sesion' => $request->hasSession(),
+        'session_driver' => config('session.driver'),
+        'session_cookie' => config('session.cookie'),
+        'session_secure' => config('session.secure'),
+        'session_domain' => config('session.domain'),
     ]);
 });
