@@ -48,19 +48,16 @@ Route::middleware('auth')->group(function () {
 require __DIR__.'/auth.php';
 
 Route::get('/diagnostico-sesion', function (\Illuminate\Http\Request $request) {
-    $request->session()->put('diagnostico', now()->timestamp);
-
-    return response()->json([
-        'version_prueba' => 'cookie-manual-2026-11-02',
-        'driver' => config('session.driver'),
-        'sesion_iniciada' => $request->session()->isStarted(),
-    ])->cookie(
-        'prueba-cookie',
-        'funciona',
-        10,
-        '/',
-        null,
-        true,
-        true
-    );
+    return response('PRUEBA-RESPUESTA-2026', 200)
+        ->header('Content-Type', 'text/plain')
+        ->header('X-Debug-Laravel', 'respuesta-directa')
+        ->withCookie(cookie(
+            'prueba-cookie',
+            'funciona',
+            10,
+            '/',
+            null,
+            true,
+            true
+        ));
 });
