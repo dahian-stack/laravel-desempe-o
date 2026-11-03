@@ -51,10 +51,12 @@ Route::get('/diagnostico-sesion', function (\Illuminate\Http\Request $request) {
     $request->session()->put('diagnostico', now()->timestamp);
 
     return response()->json([
-        'tiene_sesion' => $request->hasSession(),
-        'session_driver' => config('session.driver'),
-        'session_cookie' => config('session.cookie'),
-        'session_secure' => config('session.secure'),
-        'session_domain' => config('session.domain'),
+        'driver' => config('session.driver'),
+        'cookie' => config('session.cookie'),
+        'sesion_iniciada' => $request->session()->isStarted(),
+        'middleware_ruta' => $request->route()->gatherMiddleware(),
+        'middleware_ejecutado' => app('router')->gatherRouteMiddleware(
+            $request->route()
+        ),
     ]);
 });
