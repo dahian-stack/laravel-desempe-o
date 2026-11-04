@@ -8,7 +8,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Bootstrap CSS -->
+    <!-- Bootstrap CSS v5.3.8 -->
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
         rel="stylesheet"
@@ -62,9 +62,9 @@
     <div class="container mt-5">
 
         <div class="text-center mb-5">
-            <h1>👤 Clientes</h1>
+            <h1>👥 Clientes</h1>
             <p class="lead">
-                Administra los clientes de las producciones audiovisuales.
+                Gestiona los clientes de las producciones audiovisuales.
             </p>
         </div>
 
@@ -93,13 +93,30 @@
                 @forelse ($clientes as $cliente)
                     <tr>
                         <td>{{ $cliente->ID_cliente }}</td>
+
                         <td>
-                            <strong>{{ $cliente->nombre }}</strong>
+                            <strong>{{ $cliente->Nombre }}</strong>
                         </td>
-                        <td>{{ $cliente->tipo ?? '-' }}</td>
-                        <td>{{ $cliente->contacto ?? '-' }}</td>
+
+                        <td>
+                            @php
+                                $claseTipo = match($cliente->Tipo) {
+                                    'Empresa' => 'bg-primary',
+                                    'Independiente' => 'bg-success',
+                                    'Institución' => 'bg-warning text-dark',
+                                    default => 'bg-secondary'
+                                };
+                            @endphp
+
+                            <span class="badge {{ $claseTipo }}">
+                                    {{ $cliente->Tipo ?? '-' }}
+                                </span>
+                        </td>
+
+                        <td>{{ $cliente->Contacto ?? '-' }}</td>
 
                         <td class="text-end">
+
                             <a
                                 href="{{ route('clientes.show', $cliente->ID_cliente) }}"
                                 class="btn btn-sm btn-outline-secondary"
@@ -126,8 +143,10 @@
                                     Eliminar
                                 </button>
                             </form>
+
                         </td>
                     </tr>
+
                 @empty
                     <tr>
                         <td colspan="5" class="text-center text-muted py-4">
@@ -158,24 +177,16 @@
                 <h6 class="text-uppercase mb-3">Navegación</h6>
                 <ul class="list-unstyled small">
                     <li class="mb-2">
-                        <a href="{{ url('/dashboard') }}" class="link-light text-decoration-none">
-                            Inicio
-                        </a>
+                        <a href="{{ url('/dashboard') }}" class="link-light text-decoration-none">Inicio</a>
                     </li>
                     <li class="mb-2">
-                        <a href="{{ route('clientes.index') }}" class="link-light text-decoration-none">
-                            Clientes
-                        </a>
+                        <a href="{{ route('clientes.index') }}" class="link-light text-decoration-none">Clientes</a>
                     </li>
                     <li class="mb-2">
-                        <a href="{{ route('producciones.index') }}" class="link-light text-decoration-none">
-                            Producciones
-                        </a>
+                        <a href="{{ route('producciones.index') }}" class="link-light text-decoration-none">Producciones</a>
                     </li>
                     <li class="mb-2">
-                        <a href="{{ route('personales.index') }}" class="link-light text-decoration-none">
-                            Personal
-                        </a>
+                        <a href="{{ route('personales.index') }}" class="link-light text-decoration-none">Personal</a>
                     </li>
                 </ul>
             </div>
@@ -199,7 +210,7 @@
 
     <div class="border-top border-light border-opacity-25">
         <div class="container py-3 text-center small">
-            &copy; {{ date('Y') }} Mediapro. Todos los derechos reservados.
+            © {{ date('Y') }} Mediapro. Todos los derechos reservados.
         </div>
     </div>
 </footer>
@@ -254,3 +265,4 @@
 
 </body>
 </html>
+```

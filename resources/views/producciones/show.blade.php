@@ -1,123 +1,187 @@
 
 <x-app-layout>
-    <div class="container py-4" style="max-width: 800px;">
-        <div class="card">
-            <div class="card-header bg-primary text-white">
-                <h3 class="mb-0">{{ $produccion->Titulo }}</h3>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            Ficha de Producción
+        </h2>
+    </x-slot>
+
+    <div class="py-8 bg-gray-50 min-h-screen">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+
+            <div class="mb-6">
+                <a href="{{ route('producciones.index') }}" class="text-gray-600 hover:text-gray-900 flex items-center gap-2">
+                    ← Volver al listado
+                </a>
             </div>
 
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-md-6">
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">
-                                <strong>ID:</strong>
-                                {{ $produccion->ID_produccion }}
-                            </li>
+            <div class="bg-white rounded-xl shadow-md p-6">
 
-                            <li class="list-group-item">
-                                <strong>Tipo:</strong>
-                                {{ $produccion->Tipo ?? '—' }}
-                            </li>
+                <h3 class="text-xl font-bold text-gray-800 mb-4">
+                    {{ $produccion->Titulo }}
+                </h3>
 
-                            <li class="list-group-item">
-                                <strong>Género:</strong>
-                                {{ $produccion->Genero ?? '—' }}
-                            </li>
+                <div class="space-y-3 text-gray-600">
 
-                            <li class="list-group-item">
-                                <strong>Cliente:</strong>
-                                {{ $produccion->cliente?->Nombre ?? '—' }}
-                            </li>
+                    <p>
+                        <strong class="text-gray-800">ID:</strong>
+                        {{ $produccion->ID_produccion }}
+                    </p>
 
-                            <li class="list-group-item">
-                                <strong>Etapa:</strong>
-                                {{ $produccion->Etapa ?? '—' }}
-                            </li>
+                    <p>
+                        <strong class="text-gray-800">Cliente:</strong>
+                        {{ $produccion->cliente?->Nombre ?? '—' }}
+                    </p>
 
-                            <li class="list-group-item">
-                                <strong>Estado:</strong>
-                                {{ $produccion->Estado ?? '—' }}
-                            </li>
-                        </ul>
-                    </div>
+                    <p>
+                        <strong class="text-gray-800">Tipo:</strong>
+                        {{ $produccion->Tipo ?? '—' }}
+                    </p>
 
-                    <div class="col-md-6">
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">
-                                <strong>Presupuesto Inicial:</strong>
-                                ${{ number_format($produccion->Presupuesto_inicial ?? 0, 2) }}
-                            </li>
+                    <p>
+                        <strong class="text-gray-800">Género:</strong>
+                        {{ $produccion->Genero ?? '—' }}
+                    </p>
 
-                            <li class="list-group-item">
-                                <strong>Presupuesto Gastado:</strong>
-                                ${{ number_format($produccion->Presupuesto_gastado ?? 0, 2) }}
-                            </li>
+                    <p>
+                        <strong class="text-gray-800">Etapa:</strong>
+                        {{ $produccion->Etapa ?? '—' }}
+                    </p>
 
-                            <li class="list-group-item">
-                                <strong>Fecha Inicio:</strong>
-                                {{ $produccion->Fecha_inicio ?? '—' }}
-                            </li>
+                    <p>
+                        <strong class="text-gray-800">Estado:</strong>
+                        {{ $produccion->Estado ?? '—' }}
+                    </p>
 
-                            <li class="list-group-item">
-                                <strong>Fecha Fin:</strong>
-                                {{ $produccion->Fecha_fin ?? '—' }}
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+                    <p>
+                        <strong class="text-gray-800">Presupuesto inicial:</strong>
+                        @if ($produccion->Presupuesto_inicial !== null)
+                            ${{ number_format($produccion->Presupuesto_inicial, 2, ',', '.') }}
+                        @else
+                            —
+                        @endif
+                    </p>
 
-                <div class="mt-3">
-                    <strong>Descripción:</strong>
-                    <p class="mb-0">
+                    <p>
+                        <strong class="text-gray-800">Presupuesto gastado:</strong>
+                        @if ($produccion->Presupuesto_gastado !== null)
+                            ${{ number_format($produccion->Presupuesto_gastado, 2, ',', '.') }}
+                        @else
+                            —
+                        @endif
+                    </p>
+
+                    <p>
+                        <strong class="text-gray-800">Fecha de inicio:</strong>
+                        {{ $produccion->Fecha_inicio ?? '—' }}
+                    </p>
+
+                    <p>
+                        <strong class="text-gray-800">Fecha de finalización:</strong>
+                        {{ $produccion->Fecha_fin ?? '—' }}
+                    </p>
+
+                    <p>
+                        <strong class="text-gray-800">Descripción:</strong>
+                    </p>
+
+                    <p class="text-gray-600 bg-gray-50 p-3 rounded-lg">
                         {{ $produccion->Descripcion ?? 'Sin descripción registrada.' }}
                     </p>
+
                 </div>
 
-                @if($produccion->escenas->count())
-                    <h5 class="mt-4">
-                        Escenas ({{ $produccion->escenas->count() }}):
-                    </h5>
+                {{-- ESCENAS ASOCIADAS --}}
+                <div class="mt-8">
+                    <h4 class="text-lg font-bold text-gray-800 mb-3">
+                        Escenas ({{ $produccion->escenas->count() }})
+                    </h4>
 
-                    <ul class="list-group">
-                        @foreach($produccion->escenas as $e)
-                            <li class="list-group-item">
-                                Escena #{{ $e->ID_escena }} —
-                                {{ \Illuminate\Support\Str::limit($e->Descripcion ?? '', 60) }}
-                                ({{ $e->Estado ?? '—' }})
-                            </li>
-                        @endforeach
-                    </ul>
-                @endif
+                    @if ($produccion->escenas->count())
+                        <div class="space-y-3">
+                            @foreach ($produccion->escenas as $escena)
+                                <div class="bg-gray-50 rounded-lg p-4">
+                                    <p class="font-semibold text-gray-800">
+                                        Escena #{{ $escena->ID_escena }}
+                                    </p>
 
-                @if($produccion->planesRodaje->count())
-                    <h5 class="mt-4">
-                        Planes de Rodaje ({{ $produccion->planesRodaje->count() }}):
-                    </h5>
+                                    <p class="text-gray-600 mt-1">
+                                        {{ \Illuminate\Support\Str::limit($escena->Descripcion ?? '', 100) }}
+                                    </p>
 
-                    <ul class="list-group">
-                        @foreach($produccion->planesRodaje as $pl)
-                            <li class="list-group-item">
-                                Plan #{{ $pl->ID_plan }} —
-                                {{ $pl->Fecha ?? 'Sin fecha' }}
-                                en {{ $pl->localizacion?->Nombre ?? '—' }}
-                            </li>
-                        @endforeach
-                    </ul>
-                @endif
-            </div>
+                                    <p class="text-sm text-gray-500 mt-2">
+                                        <strong>Estado:</strong>
+                                        {{ $escena->Estado ?? '—' }}
+                                    </p>
+                                </div>
+                            @endforeach
+                        </div>
+                    @else
+                        <p class="text-gray-500 bg-gray-50 p-3 rounded-lg">
+                            Esta producción todavía no tiene escenas registradas.
+                        </p>
+                    @endif
+                </div>
 
-            <div class="card-footer text-end">
-                <a href="{{ route('producciones.index') }}" class="btn btn-secondary">
-                    Volver
-                </a>
+                {{-- PLANES DE RODAJE ASOCIADOS --}}
+                <div class="mt-8">
+                    <h4 class="text-lg font-bold text-gray-800 mb-3">
+                        Planes de rodaje ({{ $produccion->planesRodaje->count() }})
+                    </h4>
+
+                    @if ($produccion->planesRodaje->count())
+                        <div class="space-y-3">
+                            @foreach ($produccion->planesRodaje as $plan)
+                                <div class="bg-gray-50 rounded-lg p-4">
+                                    <p class="font-semibold text-gray-800">
+                                        Plan #{{ $plan->ID_plan }}
+                                    </p>
+
+                                    <p class="text-gray-600 mt-1">
+                                        <strong>Fecha:</strong>
+                                        {{ $plan->Fecha ?? '—' }}
+                                    </p>
+
+                                    <p class="text-gray-600">
+                                        <strong>Localización:</strong>
+                                        {{ $plan->localizacion?->Nombre ?? '—' }}
+                                    </p>
+
+                                    <p class="text-gray-600">
+                                        <strong>Horario:</strong>
+                                        {{ $plan->Hora_inicio ?? '—' }}
+                                        -
+                                        {{ $plan->Hora_fin ?? '—' }}
+                                    </p>
+                                </div>
+                            @endforeach
+                        </div>
+                    @else
+                        <p class="text-gray-500 bg-gray-50 p-3 rounded-lg">
+                            Esta producción todavía no tiene planes de rodaje registrados.
+                        </p>
+                    @endif
+                </div>
 
                 @auth
-                    <a href="{{ route('producciones.edit', $produccion->ID_produccion) }}"
-                       class="btn btn-warning">
-                        Editar
-                    </a>
+                    <div class="mt-6 flex gap-3">
+
+                        <a href="{{ route('producciones.edit', $produccion->ID_produccion) }}" class="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-lg transition-colors">
+                            Editar
+                        </a>
+
+                        <form action="{{ route('producciones.destroy', $produccion->ID_produccion) }}" method="POST" class="inline delete-form">
+                            @csrf
+                            @method('DELETE')
+
+                            <button type="submit" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition-colors">
+                                Eliminar
+                            </button>
+                        </form>
+
+                    </div>
                 @endauth
+
             </div>
         </div>
     </div>

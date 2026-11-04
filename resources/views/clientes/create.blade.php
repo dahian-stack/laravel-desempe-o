@@ -65,7 +65,6 @@
         <form action="{{ route('clientes.store') }}" method="POST">
             @csrf
 
-            <!-- Nombre -->
             <div class="mb-3">
                 <label for="Nombre" class="form-label">Nombre *</label>
 
@@ -74,7 +73,7 @@
                     id="Nombre"
                     name="Nombre"
                     class="form-control @error('Nombre') is-invalid @enderror"
-                    value="{{ old('nombre') }}"
+                    value="{{ old('Nombre') }}"
                     maxlength="100"
                     required
                 >
@@ -86,9 +85,8 @@
 
             <div class="row">
 
-                <!-- Tipo -->
                 <div class="col-md-6 mb-3">
-                    <label for="tipo" class="form-label">Tipo</label>
+                    <label for="Tipo" class="form-label">Tipo</label>
 
                     <select
                         id="Tipo"
@@ -97,15 +95,15 @@
                     >
                         <option value="">Seleccionar</option>
 
-                        <option value="Empresa" {{ old('tipo') == 'Empresa' ? 'selected' : '' }}>
+                        <option value="Empresa" {{ old('Tipo') == 'Empresa' ? 'selected' : '' }}>
                             Empresa
                         </option>
 
-                        <option value="Independiente" {{ old('tipo') == 'Independiente' ? 'selected' : '' }}>
+                        <option value="Independiente" {{ old('Tipo') == 'Independiente' ? 'selected' : '' }}>
                             Independiente
                         </option>
 
-                        <option value="Institución" {{ old('tipo') == 'Institución' ? 'selected' : '' }}>
+                        <option value="Institución" {{ old('Tipo') == 'Institución' ? 'selected' : '' }}>
                             Institución
                         </option>
                     </select>
@@ -115,7 +113,6 @@
                     @enderror
                 </div>
 
-                <!-- Contacto -->
                 <div class="col-md-6 mb-3">
                     <label for="Contacto" class="form-label">Contacto</label>
 
@@ -135,7 +132,6 @@
 
             </div>
 
-            <!-- Botones -->
             <div class="mt-4">
                 <a href="{{ route('clientes.index') }}" class="btn btn-outline-secondary">
                     <i class="bi bi-arrow-left me-1"></i>Cancelar
@@ -150,48 +146,56 @@
     </div>
 </main>
 
-<footer class="bg-dark text-white mt-5">
-    <div class="container py-4">
+<footer class="bg-primary text-white mt-5">
+    <div class="container py-5">
         <div class="row gy-4">
 
             <div class="col-md-4">
-                <h5 class="mb-2">🎬 Mediapro</h5>
-                <p class="small mb-0">
-                    Sistema de Gestión de Producciones Audiovisuales
+                <h5 class="mb-3">Mediapro</h5>
+                <p class="mb-0 small">
+                    Gestión integral de producciones audiovisuales.
                 </p>
             </div>
 
             <div class="col-md-4">
-                <h6 class="text-uppercase small mb-2">Navegación</h6>
+                <h6 class="text-uppercase mb-3">Navegación</h6>
                 <ul class="list-unstyled small">
-                    <li>
-                        <a href="{{ route('clientes.index') }}" class="link-light text-decoration-none">
-                            Clientes
-                        </a>
+                    <li class="mb-2">
+                        <a href="{{ url('/dashboard') }}" class="link-light text-decoration-none">Inicio</a>
                     </li>
-                    <li>
-                        <a href="{{ route('producciones.index') }}" class="link-light text-decoration-none">
-                            Producciones
-                        </a>
+                    <li class="mb-2">
+                        <a href="{{ route('clientes.index') }}" class="link-light text-decoration-none">Clientes</a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="{{ route('producciones.index') }}" class="link-light text-decoration-none">Producciones</a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="{{ route('personales.index') }}" class="link-light text-decoration-none">Personal</a>
                     </li>
                 </ul>
             </div>
 
             <div class="col-md-4">
-                <h6 class="text-uppercase small mb-2">Contacto</h6>
-                <p class="small mb-1">
-                    <i class="bi bi-geo-alt me-2"></i>Envigado, Colombia
-                </p>
-                <p class="small mb-0">
-                    <i class="bi bi-envelope me-2"></i>info@mediapro.com
-                </p>
+                <h6 class="text-uppercase mb-3">Contacto</h6>
+                <ul class="list-unstyled small">
+                    <li class="mb-2">
+                        <i class="bi bi-geo-alt-fill me-2"></i>
+                        Envigado, Antioquia — Colombia
+                    </li>
+                    <li class="mb-2">
+                        <i class="bi bi-envelope-fill me-2"></i>
+                        contacto@mediapro.com
+                    </li>
+                </ul>
             </div>
 
         </div>
     </div>
 
-    <div class="border-top border-secondary py-2 text-center small">
-        &copy; {{ date('Y') }} Mediapro. Todos los derechos reservados.
+    <div class="border-top border-light border-opacity-25">
+        <div class="container py-3 text-center small">
+            &copy; {{ date('Y') }} Mediapro. Todos los derechos reservados.
+        </div>
     </div>
 </footer>
 

@@ -1,80 +1,107 @@
 
 <x-app-layout>
-    <div class="container py-4" style="max-width: 700px;">
-        <div class="card shadow-sm">
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            Ficha de Plan de Rodaje
+        </h2>
+    </x-slot>
 
-            <div class="card-header bg-primary text-white">
-                <h3 class="mb-0">
+    <div class="py-8 bg-gray-50 min-h-screen">
+        <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+
+            <div class="mb-6">
+                <a href="{{ route('planes_rodaje.index') }}" class="text-gray-600 hover:text-gray-900 flex items-center gap-2">
+                    ← Volver al listado
+                </a>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-md p-6">
+
+                <h3 class="text-xl font-bold text-gray-800 mb-4">
                     Plan de Rodaje #{{ $plan->ID_plan }}
                 </h3>
-            </div>
 
-            <div class="card-body">
-                <ul class="list-group list-group-flush">
+                <div class="space-y-3 text-gray-600">
 
-                    <li class="list-group-item">
-                        <strong>Producción:</strong>
+                    <p>
+                        <strong class="text-gray-800">ID:</strong>
+                        {{ $plan->ID_plan }}
+                    </p>
+
+                    <p>
+                        <strong class="text-gray-800">Producción:</strong>
                         {{ $plan->produccion?->Titulo ?? '—' }}
-                    </li>
+                    </p>
 
-                    <li class="list-group-item">
-                        <strong>Localización:</strong>
+                    <p>
+                        <strong class="text-gray-800">Localización:</strong>
                         {{ $plan->localizacion?->Nombre ?? '—' }}
-                    </li>
+                    </p>
 
-                    <li class="list-group-item">
-                        <strong>Personal asignado:</strong>
+                    <p>
+                        <strong class="text-gray-800">Personal asignado:</strong>
                         {{ $plan->personal?->Nombres ?? '—' }}
                         {{ $plan->personal?->Apellidos ?? '' }}
-                    </li>
+                    </p>
 
-                    <li class="list-group-item">
-                        <strong>Fecha:</strong>
+                    <p>
+                        <strong class="text-gray-800">Fecha:</strong>
                         {{ $plan->Fecha ?? '—' }}
-                    </li>
+                    </p>
 
-                    <li class="list-group-item">
-                        <strong>Hora de inicio:</strong>
+                    <p>
+                        <strong class="text-gray-800">Hora de inicio:</strong>
                         {{ $plan->Hora_inicio ?? '—' }}
-                    </li>
+                    </p>
 
-                    <li class="list-group-item">
-                        <strong>Hora de finalización:</strong>
+                    <p>
+                        <strong class="text-gray-800">Hora de finalización:</strong>
                         {{ $plan->Hora_fin ?? '—' }}
-                    </li>
+                    </p>
 
-                    <li class="list-group-item">
-                        <strong>Eficiencia:</strong>
+                    <p>
+                        <strong class="text-gray-800">Eficiencia:</strong>
                         {{ $plan->Eficiencia ?? '—' }}
-                    </li>
+                    </p>
 
-                    <li class="list-group-item">
-                        <strong>Requerimientos:</strong>
-                        {{ $plan->Requerimientos ?? '—' }}
-                    </li>
+                    <p>
+                        <strong class="text-gray-800">Requerimientos:</strong>
+                    </p>
 
-                    <li class="list-group-item">
-                        <strong>Plan de contingencia:</strong>
-                        {{ $plan->Plan_contingencia ?? '—' }}
-                    </li>
+                    <p class="text-gray-600 bg-gray-50 p-3 rounded-lg">
+                        {{ $plan->Requerimientos ?? 'Sin información' }}
+                    </p>
 
-                </ul>
-            </div>
+                    <p>
+                        <strong class="text-gray-800">Plan de contingencia:</strong>
+                    </p>
 
-            <div class="card-footer text-end">
-                <a href="{{ route('planes_rodaje.index') }}"
-                   class="btn btn-secondary">
-                    Volver
-                </a>
+                    <p class="text-gray-600 bg-gray-50 p-3 rounded-lg">
+                        {{ $plan->Plan_contingencia ?? 'Sin información' }}
+                    </p>
+
+                </div>
 
                 @auth
-                    <a href="{{ route('planes_rodaje.edit', $plan->ID_plan) }}"
-                       class="btn btn-warning">
-                        Editar
-                    </a>
-                @endauth
-            </div>
+                    <div class="mt-6 flex gap-3">
 
+                        <a href="{{ route('planes_rodaje.edit', $plan->ID_plan) }}" class="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-lg transition-colors">
+                            Editar
+                        </a>
+
+                        <form action="{{ route('planes_rodaje.destroy', $plan->ID_plan) }}" method="POST" class="inline delete-form">
+                            @csrf
+                            @method('DELETE')
+
+                            <button type="submit" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition-colors">
+                                Eliminar
+                            </button>
+                        </form>
+
+                    </div>
+                @endauth
+
+            </div>
         </div>
     </div>
 </x-app-layout>
