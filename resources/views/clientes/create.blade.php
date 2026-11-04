@@ -67,19 +67,19 @@
 
             <!-- Nombre -->
             <div class="mb-3">
-                <label for="nombre" class="form-label">Nombre *</label>
+                <label for="Nombre" class="form-label">Nombre *</label>
 
                 <input
                     type="text"
-                    id="nombre"
-                    name="nombre"
-                    class="form-control @error('nombre') is-invalid @enderror"
+                    id="Nombre"
+                    name="Nombre"
+                    class="form-control @error('Nombre') is-invalid @enderror"
                     value="{{ old('nombre') }}"
                     maxlength="100"
                     required
                 >
 
-                @error('nombre')
+                @error('Nombre')
                 <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
@@ -91,9 +91,9 @@
                     <label for="tipo" class="form-label">Tipo</label>
 
                     <select
-                        id="tipo"
-                        name="tipo"
-                        class="form-select @error('tipo') is-invalid @enderror"
+                        id="Tipo"
+                        name="Tipo"
+                        class="form-select @error('Tipo') is-invalid @enderror"
                     >
                         <option value="">Seleccionar</option>
 
@@ -110,25 +110,25 @@
                         </option>
                     </select>
 
-                    @error('tipo')
+                    @error('Tipo')
                     <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
 
                 <!-- Contacto -->
                 <div class="col-md-6 mb-3">
-                    <label for="contacto" class="form-label">Contacto</label>
+                    <label for="Contacto" class="form-label">Contacto</label>
 
                     <input
                         type="text"
-                        id="contacto"
-                        name="contacto"
-                        class="form-control @error('contacto') is-invalid @enderror"
-                        value="{{ old('contacto') }}"
+                        id="Contacto"
+                        name="Contacto"
+                        class="form-control @error('Contacto') is-invalid @enderror"
+                        value="{{ old('Contacto') }}"
                         maxlength="100"
                     >
 
-                    @error('contacto')
+                    @error('Contacto')
                     <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
