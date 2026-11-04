@@ -9,55 +9,27 @@ use App\Http\Controllers\EquipoTecnicoController;
 use App\Http\Controllers\LocalizacionController;
 use App\Http\Controllers\PlanRodajeController;
 use App\Http\Controllers\EscenaController;
-use App\Http\Controllers\ProfileController;
 
 // Página principal
 Route::get('/', function () {
     return redirect()->route('dashboard');
 });
 
-// Rutas protegidas (solo usuarios conectados)
-Route::middleware('auth')->group(function () {
+// MODO TEMPORAL DE DEMOSTRACIÓN
+// Acceso público para la evaluación.
 
-    // Dashboard
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->name('dashboard');
 
-    // Módulos del sistema
-    Route::resource('clientes', ClienteController::class);
-    Route::resource('producciones', ProduccionController::class);
-    Route::resource('personales', PersonalController::class);
-    Route::resource('equipos_tecnicos', EquipoTecnicoController::class);
-    Route::resource('localizaciones', LocalizacionController::class);
-    Route::resource('planes_rodaje', PlanRodajeController::class);
-    Route::resource('escenas', EscenaController::class);
+// Módulos CRUD
+Route::resource('clientes', ClienteController::class);
+Route::resource('producciones', ProduccionController::class);
+Route::resource('personales', PersonalController::class);
+Route::resource('equipos_tecnicos', EquipoTecnicoController::class);
+Route::resource('localizaciones', LocalizacionController::class);
+Route::resource('planes_rodaje', PlanRodajeController::class);
+Route::resource('escenas', EscenaController::class);
 
-    // Perfil de usuario
-    Route::get('/profile', [ProfileController::class, 'edit'])
-        ->name('profile.edit');
-
-    Route::patch('/profile', [ProfileController::class, 'update'])
-        ->name('profile.update');
-
-    Route::delete('/profile', [ProfileController::class, 'destroy'])
-        ->name('profile.destroy');
-});
-
-// Rutas de autenticación (Breeze)
+// Autenticación Breeze
 require __DIR__.'/auth.php';
-
-Route::get('/diagnostico-sesion', function (\Illuminate\Http\Request $request) {
-    return response('PRUEBA-RESPUESTA-2026', 200)
-        ->header('Content-Type', 'text/plain')
-        ->header('X-Debug-Laravel', 'respuesta-directa')
-        ->withCookie(cookie(
-            'prueba-cookie',
-            'funciona',
-            10,
-            '/',
-            null,
-            true,
-            true
-        ));
-});
