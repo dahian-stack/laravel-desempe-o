@@ -1,3 +1,7 @@
+Para iniciar sesion :) ->
+Email = kdzapara17@gmail.com
+Contraseña = mediapro
+
 Link video explicacion -> https://drive.google.com/file/d/1RXoMy8ngxfbSSvcJzdKGsmg241eu6URt/view?usp=drive_link
 -------------------------------------------------------------------------------------------------------------------
 
