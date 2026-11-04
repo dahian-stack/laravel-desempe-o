@@ -22,9 +22,9 @@ class ClienteController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'nombre'   => 'required|string|max:100',
-            'tipo'     => 'nullable|string|max:50',
-            'contacto' => 'nullable|string|max:100',
+            'Nombre'   => 'required|string|max:100',
+            'Tipo'     => 'nullable|string|max:50',
+            'Contacto' => 'nullable|string|max:100',
         ]);
 
         Cliente::create($validated);
@@ -53,9 +53,9 @@ class ClienteController extends Controller
         $cliente = Cliente::findOrFail($id);
 
         $validated = $request->validate([
-            'nombre'   => 'required|string|max:100',
-            'tipo'     => 'nullable|string|max:50',
-            'contacto' => 'nullable|string|max:100',
+            'Nombre'   => 'required|string|max:100',
+            'Tipo'     => 'nullable|string|max:50',
+            'Contacto' => 'nullable|string|max:100',
         ]);
 
         $cliente->update($validated);
