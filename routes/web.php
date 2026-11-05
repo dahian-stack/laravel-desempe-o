@@ -11,9 +11,8 @@ use App\Http\Controllers\EscenaController;
 use App\Http\Controllers\ProfileController;
 
 // Página principal
-Route::get('/', function () {
-    return redirect()->route('dashboard');
-});
+// Página principal - Landing Page
+Route::view('/', 'landing')->name('landing');
 
 // Rutas protegidas: requieren iniciar sesión
 Route::middleware('auth')->group(function () {
