@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -16,10 +15,17 @@
         MEDIA<span class="text-violet-500">PRO</span>
     </h1>
 
-    <a href="{{ route('login') }}"
-       class="bg-violet-700 hover:bg-violet-800 px-5 py-2 rounded-lg transition">
-        Iniciar sesión
-    </a>
+    <div class="flex items-center gap-3">
+        <a href="{{ route('register') }}"
+           class="text-violet-300 hover:text-white px-4 py-2 rounded-lg transition">
+            Registrarse
+        </a>
+
+        <a href="{{ route('login') }}"
+           class="bg-violet-700 hover:bg-violet-800 px-5 py-2 rounded-lg transition">
+            Iniciar sesión
+        </a>
+    </div>
 </header>
 
 <main class="min-h-[75vh] flex flex-col items-center justify-center text-center px-6">
@@ -51,4 +57,4 @@
 
 </body>
 </html>
-
+```

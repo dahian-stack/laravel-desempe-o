@@ -10,7 +10,7 @@ use App\Http\Controllers\PlanRodajeController;
 use App\Http\Controllers\EscenaController;
 use App\Http\Controllers\ProfileController;
 
-// Página principal
+
 // Página principal - Landing Page
 Route::view('/', 'landing')->name('landing');
 
