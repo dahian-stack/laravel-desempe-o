@@ -1151,3 +1151,79 @@ h2 em {
         transition-duration: .01ms !important;
     }
 }
+
+/* =========================
+   CONTACTO - FORMULARIO
+========================= */
+.contact-layout {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: minmax(0, .9fr) minmax(360px, 1.1fr);
+    align-items: start;
+    gap: clamp(35px, 6vw, 85px);
+}
+.contact-panel { max-width: 560px; }
+.contact-details { margin-top: 38px; display: grid; gap: 7px; }
+.contact-detail-label, .form-heading > span, .footer-title {
+    color: var(--violet2); font-size: 9px; font-weight: 700; letter-spacing: 2px;
+}
+.contact-details > a { width: fit-content; font: 600 clamp(15px, 1.7vw, 19px) Manrope, sans-serif; color: var(--text); }
+.contact-details > a span { color: var(--violet2); }
+.contact-details small { color: var(--muted); font-size: 11px; }
+.contact-form {
+    position: relative; z-index: 2; padding: clamp(22px, 3vw, 36px);
+    background: rgba(23,17,38,.88); border: 1px solid var(--line);
+    border-radius: 5px; box-shadow: 0 25px 70px rgba(0,0,0,.22);
+}
+.form-heading { margin-bottom: 25px; }
+.form-heading p { margin: 7px 0 0; color: var(--muted); font-size: 12px; }
+.contact-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 18px 14px; }
+.contact-field { display: grid; gap: 8px; min-width: 0; }
+.contact-field-full { grid-column: 1 / -1; }
+.contact-field > span { color: #e8e1f2; font-size: 11px; font-weight: 600; }
+.contact-field input, .contact-field textarea {
+    width: 100%; border: 1px solid rgba(190,164,255,.2); border-radius: 3px;
+    outline: none; background: rgba(9,7,17,.72); color: var(--text);
+    padding: 13px 14px; font: 400 12px 'DM Sans', sans-serif; transition: border-color .2s, box-shadow .2s;
+}
+.contact-field textarea { resize: vertical; min-height: 125px; }
+.contact-field input::placeholder, .contact-field textarea::placeholder { color: #777084; }
+.contact-field input:focus, .contact-field textarea:focus { border-color: var(--violet2); box-shadow: 0 0 0 3px rgba(139,92,246,.12); }
+.field-error { color: #ff9caa; font-size: 10px; }
+.contact-consent { display: flex; align-items: flex-start; gap: 10px; margin-top: 18px; color: var(--muted); font-size: 10px; line-height: 1.6; cursor: pointer; }
+.contact-consent input { accent-color: var(--violet); margin-top: 3px; }
+.contact-submit { margin-top: 22px; border: 0; cursor: pointer; font: inherit; }
+.contact-privacy-note { margin: 13px 0 0; color: #81798e; font-size: 9px; line-height: 1.6; }
+.contact-alert { padding: 12px 14px; margin: 0 0 18px; border-radius: 3px; font-size: 11px; line-height: 1.6; }
+.contact-alert-success { color: #c8f7d6; background: rgba(38,130,75,.15); border: 1px solid rgba(91,202,132,.3); }
+.contact-alert-error { color: #ffc3cb; background: rgba(170,50,70,.13); border: 1px solid rgba(255,120,140,.25); }
+.contact-trap { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+
+/* =========================
+   FOOTER COMPLETO
+========================= */
+.site-footer { text-align: left; padding-top: 58px; }
+.footer-main { max-width: var(--max); margin: 0 auto; display: grid; grid-template-columns: 1.5fr .7fr 1.2fr; gap: 50px; padding-bottom: 45px; }
+.footer-brand-block > p { color: var(--muted); font-size: 11px; line-height: 1.9; margin-top: 18px; }
+.footer-column { display: flex; flex-direction: column; align-items: flex-start; gap: 11px; }
+.footer-title { margin-bottom: 6px; }
+.footer-column > a, .footer-location { color: #aaa2b8; font-size: 11px; transition: color .2s; }
+.footer-column > a:hover { color: var(--violet2); }
+.site-footer .footer-bottom { max-width: var(--max); margin: 0 auto; padding-top: 19px; }
+
+@media(max-width: 850px) {
+    .contact-layout { grid-template-columns: 1fr; }
+    .contact-panel { max-width: 680px; }
+    .contact-form { max-width: 680px; width: 100%; }
+    .footer-main { grid-template-columns: 1fr 1fr; gap: 35px; }
+    .footer-brand-block { grid-column: 1 / -1; }
+}
+@media(max-width: 560px) {
+    .contact-fields { grid-template-columns: 1fr; }
+    .contact-field-full { grid-column: auto; }
+    .footer-main { grid-template-columns: 1fr; gap: 28px; }
+    .footer-brand-block { grid-column: auto; }
+    .site-footer { text-align: left; }
+    .site-footer .footer-bottom { justify-content: space-between; }
+}

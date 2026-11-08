@@ -9,10 +9,15 @@ use App\Http\Controllers\LocalizacionController;
 use App\Http\Controllers\PlanRodajeController;
 use App\Http\Controllers\EscenaController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ContactController;
 
 
 // Página principal - Landing Page
 Route::view('/', 'landing')->name('landing');
+
+Route::post('/contacto', [ContactController::class, 'store'])
+    ->middleware('throttle:5,1')
+    ->name('contact.store');
 
 // Rutas protegidas: requieren iniciar sesión
 Route::middleware('auth')->group(function () {

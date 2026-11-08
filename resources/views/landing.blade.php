@@ -77,7 +77,7 @@
         </div>
 
         <div class="hero-caption">
-            <span>01 / 06</span>
+            <span>11 / 2026</span>
             <span>CREATIVIDAD · PRODUCCIÓN · VISIÓN</span>
             <span>MEDELLÍN, COLOMBIA</span>
         </div>
@@ -584,34 +584,93 @@
 
     <section class="contact section-wrap" id="contacto">
 
-        <div class="contact-panel">
+        <div class="contact-layout">
+            <div class="contact-panel">
+                <div class="section-kicker">06 — HAGAMOS ALGO INCREÍBLE</div>
+                <h2>Tu próxima historia<br>empieza con una <em>idea.</em></h2>
+                <p>
+                    Cuéntanos qué tienes en mente. En MEDIAPRO estamos
+                    listos para explorar nuevas posibilidades contigo.
+                </p>
 
-            <div class="section-kicker">
-                06 — HAGAMOS ALGO INCREÍBLE
+                <div class="contact-details">
+                    <span class="contact-detail-label">ESCRÍBENOS DIRECTAMENTE</span>
+                    <a href="mailto:mediapro.contacto@gmail.com">
+                        mediapro.contacto@gmail.com <span>↗</span>
+                    </a>
+                    <small>Medellín, Colombia · Atención a consultas y proyectos</small>
+                </div>
+
+                <div class="contact-actions">
+                    <a class="button" href="{{ route('register') }}">Crear una cuenta <span>↗</span></a>
+                    <a class="text-link" href="{{ route('login') }}">Ya tengo una cuenta</a>
+                </div>
             </div>
 
-            <h2>
-                Tu próxima historia<br>
-                empieza con una <em>idea.</em>
-            </h2>
+            <form class="contact-form" action="{{ route('contact.store') }}" method="POST">
+                @csrf
+                <div class="form-heading">
+                    <span>CUÉNTANOS TU IDEA</span>
+                    <p>Completa el formulario y nos pondremos en contacto contigo.</p>
+                </div>
 
-            <p>
-                Cuéntanos qué tienes en mente. En MEDIAPRO estamos
-                listos para explorar nuevas posibilidades contigo.
-            </p>
+                @if (session('contact_success'))
+                    <div class="contact-alert contact-alert-success" role="status">
+                        {{ session('contact_success') }}
+                    </div>
+                @endif
 
-            <div class="contact-actions">
+                @if (session('contact_error'))
+                    <div class="contact-alert contact-alert-error" role="alert">
+                        {{ session('contact_error') }}
+                    </div>
+                @endif
 
-                <a class="button" href="{{ route('register') }}">
-                    Crear una cuenta <span>↗</span>
-                </a>
+                @if ($errors->any())
+                    <div class="contact-alert contact-alert-error" role="alert">
+                        Revisa los campos señalados e inténtalo nuevamente.
+                    </div>
+                @endif
 
-                <a class="text-link" href="{{ route('login') }}">
-                    Ya tengo una cuenta
-                </a>
+                <div class="contact-fields">
+                    <label class="contact-field">
+                        <span>Nombre completo</span>
+                        <input type="text" name="name" value="{{ old('name') }}" placeholder="¿Cómo te llamas?" maxlength="120" autocomplete="name" required>
+                        @error('name') <small class="field-error">{{ $message }}</small> @enderror
+                    </label>
 
-            </div>
+                    <label class="contact-field">
+                        <span>Correo electrónico</span>
+                        <input type="email" name="email" value="{{ old('email') }}" placeholder="tunombre@correo.com" maxlength="254" autocomplete="email" required>
+                        @error('email') <small class="field-error">{{ $message }}</small> @enderror
+                    </label>
 
+                    <label class="contact-field contact-field-full">
+                        <span>Asunto</span>
+                        <input type="text" name="subject" value="{{ old('subject') }}" placeholder="¿Sobre qué quieres hablar?" maxlength="150" required>
+                        @error('subject') <small class="field-error">{{ $message }}</small> @enderror
+                    </label>
+
+                    <label class="contact-field contact-field-full">
+                        <span>Tu mensaje</span>
+                        <textarea name="message" rows="5" maxlength="5000" placeholder="Cuéntanos un poco sobre tu proyecto..." required>{{ old('message') }}</textarea>
+                        @error('message') <small class="field-error">{{ $message }}</small> @enderror
+                    </label>
+                </div>
+
+                <label class="contact-consent">
+                    <input type="checkbox" name="data_authorization" value="1" required {{ old('data_authorization') ? 'checked' : '' }}>
+                    <span>Autorizo el uso de los datos que proporciono para que MEDIAPRO pueda responder esta solicitud.</span>
+                </label>
+                @error('data_authorization') <small class="field-error">{{ $message }}</small> @enderror
+
+                <div class="contact-trap" aria-hidden="true">
+                    <label>No completar este campo <input type="text" name="website" tabindex="-1" autocomplete="off"></label>
+                </div>
+
+                <button class="button contact-submit" type="submit">Enviar mensaje <span>↗</span></button>
+                <p class="contact-privacy-note">Tus datos se utilizarán para atender esta consulta. Próximamente encontrarás aquí nuestra política completa de tratamiento de datos personales.</p>
+            </form>
         </div>
 
         <div class="contact-orb" aria-hidden="true"></div>
@@ -626,27 +685,36 @@
 ========================== -->
 
 <footer class="site-footer">
+    <div class="footer-main">
+        <div class="footer-brand-block">
+            <a class="brand" href="#inicio" aria-label="MEDIAPRO, volver al inicio">
+                MEDIA<span>PRO</span>
+                <small>IMAGENESCREATIVAS</small>
+            </a>
+            <p>Donde tus ideas cobran vida.<br>Creatividad, producción y visión para contar historias.</p>
+        </div>
 
-    <a class="brand" href="#inicio">
-        MEDIA<span>PRO</span>
-        <small>IMAGENESCREATIVAS</small>
-    </a>
+        <div class="footer-column">
+            <span class="footer-title">EXPLORA</span>
+            <a href="#nosotros">Nosotros</a>
+            <a href="#servicios">Servicios</a>
+            <a href="#portafolio">Portafolio</a>
+            <a href="#clientes">Clientes</a>
+            <a href="#planes">Planes</a>
+        </div>
 
-    <p>Donde tus ideas cobran vida.</p>
-
-    <div class="footer-links">
-        <a href="#nosotros">Nosotros</a>
-        <a href="#servicios">Servicios</a>
-        <a href="#portafolio">Portafolio</a>
-        <a href="#planes">Planes</a>
-        <a href="#contacto">Contacto</a>
+        <div class="footer-column">
+            <span class="footer-title">HABLEMOS</span>
+            <a href="#contacto">Formulario de contacto</a>
+            <a href="mailto:mediapro.contacto@gmail.com">mediapro.contacto@gmail.com</a>
+            <span class="footer-location">Medellín, Colombia</span>
+        </div>
     </div>
 
     <div class="footer-bottom">
-        <span>© {{ date('Y') }} ImagenesCreativas · MEDIAPRO</span>
+        <span>© {{ date('Y') }} ImagenesCreativas · MEDIAPRO. Todos los derechos reservados.</span>
         <a href="#inicio">Volver arriba ↑</a>
     </div>
-
 </footer>
 
 </body>
