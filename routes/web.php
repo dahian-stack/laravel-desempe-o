@@ -15,6 +15,10 @@ use App\Http\Controllers\ContactController;
 // Página principal - Landing Page
 Route::view('/', 'landing')->name('landing');
 
+// Política de tratamiento de datos personales
+Route::view('/politica-de-privacidad', 'legal.politica-privacidad')
+    ->name('privacy.policy');
+
 Route::post('/contacto', [ContactController::class, 'store'])
     ->middleware('throttle:5,1')
     ->name('contact.store');

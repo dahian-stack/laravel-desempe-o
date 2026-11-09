@@ -669,7 +669,13 @@
                 </div>
 
                 <button class="button contact-submit" type="submit">Enviar mensaje <span>↗</span></button>
-                <p class="contact-privacy-note">Tus datos se utilizarán para atender esta consulta. Próximamente encontrarás aquí nuestra política completa de tratamiento de datos personales.</p>
+                <p class="contact-privacy-note">
+                    Tus datos serán utilizados para atender esta consulta.
+                    Consulta nuestra
+                    <a href="{{ route('privacy.policy') }}" target="_blank" rel="noopener noreferrer">
+                        Política de tratamiento de datos personales
+                    </a>.
+                </p>
             </form>
         </div>
 
@@ -707,6 +713,7 @@
             <span class="footer-title">HABLEMOS</span>
             <a href="#contacto">Formulario de contacto</a>
             <a href="mailto:mediapro.contacto@gmail.com">mediapro.contacto@gmail.com</a>
+            <a href="{{ route('privacy.policy') }}">Política de privacidad</a>
             <span class="footer-location">Medellín, Colombia</span>
         </div>
     </div>
