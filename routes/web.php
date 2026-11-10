@@ -86,9 +86,21 @@ Route::middleware('auth')->get('/b2-test', function () {
         ]);
 
     } catch (\Throwable $e) {
+
+        \Illuminate\Support\Facades\Log::error(
+            'ERROR EN LA PRUEBA DE BACKBLAZE B2',
+            [
+                'exception' => $e->getMessage(),
+                'class' => get_class($e),
+                'previous' => $e->getPrevious()?->getMessage(),
+            ]
+        );
+
         return response()->json([
             'estado' => 'ERROR',
-            'mensaje' => $e->getMessage()
+            'tipo' => get_class($e),
+            'mensaje' => $e->getMessage(),
+            'causa' => $e->getPrevious()?->getMessage(),
         ], 500);
     }
 });
