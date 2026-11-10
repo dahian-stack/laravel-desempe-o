@@ -53,3 +53,42 @@ Route::middleware('auth')->group(function () {
 
 // Autenticación Breeze
 require __DIR__.'/auth.php';
+
+
+Route::middleware('auth')->get('/b2-test', function () {
+    try {
+        $disco = \Illuminate\Support\Facades\Storage::disk('b2');
+
+        $ruta = 'pruebas/mediapro-conexion.txt';
+
+        $contenido = 'MEDIAPRO - Prueba de almacenamiento externo en Backblaze B2.';
+
+        $disco->put($ruta, $contenido);
+
+        if (!$disco->exists($ruta)) {
+            throw new \Exception('No se encontró el archivo en Backblaze.');
+        }
+
+        $recuperado = $disco->get($ruta);
+
+        if ($recuperado !== $contenido) {
+            throw new \Exception('El contenido recuperado no coincide.');
+        }
+
+        return response()->json([
+            'estado' => 'EXITOSO',
+            'subida' => true,
+            'existencia' => true,
+            'recuperacion' => true,
+            'contenido_correcto' => true,
+            'archivo' => $ruta,
+            'mensaje' => 'MEDIAPRO se conectó correctamente con Backblaze B2.'
+        ]);
+
+    } catch (\Throwable $e) {
+        return response()->json([
+            'estado' => 'ERROR',
+            'mensaje' => $e->getMessage()
+        ], 500);
+    }
+});
