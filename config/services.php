@@ -34,5 +34,7 @@ return [
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
     ],
-
+    'backup' => [
+        'token' => env('BACKUP_TOKEN'),
+    ],
 ];
