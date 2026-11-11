@@ -1,3 +1,4 @@
+
 <?php
 
 use Illuminate\Support\Facades\Route;
@@ -117,6 +118,13 @@ Route::middleware('auth')->group(function () {
         ->name('backup.test');
 
 });
+
+
+// Ejecución automática del respaldo desde cron-job.org
+// La autenticación se realiza mediante un token secreto
+Route::post('/backup/run', [BackupController::class, 'runScheduled'])
+    ->middleware('throttle:3,1')
+    ->name('backup.run');
 
 
 // Autenticación Breeze
