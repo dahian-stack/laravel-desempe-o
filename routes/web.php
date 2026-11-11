@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
+
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\ProduccionController;
 use App\Http\Controllers\PersonalController;
@@ -12,25 +13,32 @@ use App\Http\Controllers\PlanRodajeController;
 use App\Http\Controllers\EscenaController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\BackupController;
 
-// Página principal
+
+// Página principal - Landing Page
 Route::view('/', 'landing')->name('landing');
 
-// Política de privacidad
+
+// Política de tratamiento de datos personales
 Route::view('/politica-de-privacidad', 'legal.politica-privacidad')
     ->name('privacy.policy');
+
 
 // Formulario de contacto
 Route::post('/contacto', [ContactController::class, 'store'])
     ->middleware('throttle:5,1')
     ->name('contact.store');
 
-// Rutas protegidas
+
+// Rutas protegidas: requieren iniciar sesión
 Route::middleware('auth')->group(function () {
 
+    // Dashboard
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+
 
     // Módulos CRUD
     Route::resource('clientes', ClienteController::class);
@@ -41,7 +49,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('planes_rodaje', PlanRodajeController::class);
     Route::resource('escenas', EscenaController::class);
 
-    // Perfil
+
+    // Perfil de usuario
     Route::get('/profile', [ProfileController::class, 'edit'])
         ->name('profile.edit');
 
@@ -51,12 +60,15 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])
         ->name('profile.destroy');
 
+
     // Prueba de conexión con Backblaze B2
     Route::get('/b2-test', function () {
+
         try {
             $disco = Storage::disk('b2');
 
             $ruta = 'pruebas/mediapro-conexion.txt';
+
             $contenido = 'MEDIAPRO - Prueba de almacenamiento externo en Backblaze B2.';
 
             $disco->put($ruta, $contenido);
@@ -96,8 +108,16 @@ Route::middleware('auth')->group(function () {
                 'causa' => $e->getPrevious()?->getMessage(),
             ], 500);
         }
+
     })->name('b2.test');
+
+
+    // Prueba manual del respaldo de MEDIAPRO
+    Route::get('/backup/test', [BackupController::class, 'test'])
+        ->name('backup.test');
+
 });
+
 
 // Autenticación Breeze
 require __DIR__.'/auth.php';
