@@ -1,9 +1,11 @@
+
 <?php
 
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Request;
+use Sentry\Laravel\Integration;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -22,8 +24,7 @@ return Application::configure(basePath: dirname(__DIR__))
             Request::HEADER_X_FORWARDED_PROTO
         );
 
-        // Excluir únicamente el endpoint externo del respaldo
-        // de la validación CSRF.
+        // Excepción CSRF para los respaldos automáticos
         $middleware->validateCsrfTokens(
             except: [
                 'backup/run',
@@ -32,6 +33,9 @@ return Application::configure(basePath: dirname(__DIR__))
 
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        //
+
+        // Integración de Sentry para capturar errores
+        Integration::handles($exceptions);
+
     })
     ->create();
