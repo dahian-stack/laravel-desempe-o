@@ -12,7 +12,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id')
                 ->nullable()
                 ->unique()
-                ->after('ID_cliente');
+                ->after('ID_Cliente');
         });
     }
 
