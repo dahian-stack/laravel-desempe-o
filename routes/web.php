@@ -14,6 +14,7 @@ use App\Http\Controllers\EscenaController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\BackupController;
+use App\Http\Controllers\ClientePortalController;
 
 
 // Página principal - Landing Page
@@ -34,23 +35,25 @@ Route::post('/contacto', [ContactController::class, 'store'])
 // Rutas protegidas: requieren iniciar sesión
 Route::middleware('auth')->group(function () {
 
-    // Dashboard
+    // Redirección según el rol del usuario
     Route::get('/dashboard', function () {
-        return view('dashboard');
+
+        if (auth()->user()->role === 'admin') {
+            return view('dashboard');
+        }
+
+        return redirect()->route('portal.cliente');
+
     })->name('dashboard');
 
 
-    // Módulos CRUD
-    Route::resource('clientes', ClienteController::class);
-    Route::resource('producciones', ProduccionController::class);
-    Route::resource('personales', PersonalController::class);
-    Route::resource('equipos_tecnicos', EquipoTecnicoController::class);
-    Route::resource('localizaciones', LocalizacionController::class);
-    Route::resource('planes_rodaje', PlanRodajeController::class);
-    Route::resource('escenas', EscenaController::class);
+    // Portal exclusivo para clientes
+    Route::get('/portal/cliente', [ClientePortalController::class, 'index'])
+        ->middleware('role:cliente')
+        ->name('portal.cliente');
 
 
-    // Perfil de usuario
+    // Perfil de usuario: disponible para ambos roles
     Route::get('/profile', [ProfileController::class, 'edit'])
         ->name('profile.edit');
 
@@ -61,60 +64,85 @@ Route::middleware('auth')->group(function () {
         ->name('profile.destroy');
 
 
-    // Prueba de conexión con Backblaze B2
-    Route::get('/b2-test', function () {
+    // Gestión de fotografía de perfil
+    Route::post('/profile/photo', [ProfileController::class, 'updatePhoto'])
+        ->name('profile.photo.update');
 
-        try {
-            $disco = Storage::disk('b2');
+    Route::delete('/profile/photo', [ProfileController::class, 'deletePhoto'])
+        ->name('profile.photo.destroy');
 
-            $ruta = 'pruebas/mediapro-conexion.txt';
+    Route::get('/profile/photo', [ProfileController::class, 'photo'])
+        ->name('profile.photo');
 
-            $contenido = 'MEDIAPRO - Prueba de almacenamiento externo en Backblaze B2.';
 
-            $disco->put($ruta, $contenido);
+    // Módulos administrativos: exclusivos para administradores
+    Route::middleware('role:admin')->group(function () {
 
-            if (!$disco->exists($ruta)) {
-                throw new \Exception('No se encontró el archivo en Backblaze.');
+        Route::resource('clientes', ClienteController::class);
+        Route::resource('producciones', ProduccionController::class);
+        Route::resource('personales', PersonalController::class);
+        Route::resource('equipos_tecnicos', EquipoTecnicoController::class);
+        Route::resource('localizaciones', LocalizacionController::class);
+        Route::resource('planes_rodaje', PlanRodajeController::class);
+        Route::resource('escenas', EscenaController::class);
+
+
+        // Prueba de conexión con Backblaze B2
+        Route::get('/b2-test', function () {
+
+            try {
+                $disco = Storage::disk('b2');
+
+                $ruta = 'pruebas/mediapro-conexion.txt';
+
+                $contenido = 'MEDIAPRO - Prueba de almacenamiento externo en Backblaze B2.';
+
+                $disco->put($ruta, $contenido);
+
+                if (!$disco->exists($ruta)) {
+                    throw new \Exception('No se encontró el archivo en Backblaze.');
+                }
+
+                $recuperado = $disco->get($ruta);
+
+                if ($recuperado !== $contenido) {
+                    throw new \Exception('El contenido recuperado no coincide.');
+                }
+
+                return response()->json([
+                    'estado' => 'EXITOSO',
+                    'subida' => true,
+                    'existencia' => true,
+                    'recuperacion' => true,
+                    'contenido_correcto' => true,
+                    'archivo' => $ruta,
+                    'mensaje' => 'MEDIAPRO se conectó correctamente con Backblaze B2.'
+                ]);
+
+            } catch (\Throwable $e) {
+
+                Log::error('ERROR EN LA PRUEBA DE BACKBLAZE B2', [
+                    'exception' => $e->getMessage(),
+                    'class' => get_class($e),
+                    'previous' => $e->getPrevious()?->getMessage(),
+                ]);
+
+                return response()->json([
+                    'estado' => 'ERROR',
+                    'tipo' => get_class($e),
+                    'mensaje' => $e->getMessage(),
+                    'causa' => $e->getPrevious()?->getMessage(),
+                ], 500);
             }
 
-            $recuperado = $disco->get($ruta);
-
-            if ($recuperado !== $contenido) {
-                throw new \Exception('El contenido recuperado no coincide.');
-            }
-
-            return response()->json([
-                'estado' => 'EXITOSO',
-                'subida' => true,
-                'existencia' => true,
-                'recuperacion' => true,
-                'contenido_correcto' => true,
-                'archivo' => $ruta,
-                'mensaje' => 'MEDIAPRO se conectó correctamente con Backblaze B2.'
-            ]);
-
-        } catch (\Throwable $e) {
-
-            Log::error('ERROR EN LA PRUEBA DE BACKBLAZE B2', [
-                'exception' => $e->getMessage(),
-                'class' => get_class($e),
-                'previous' => $e->getPrevious()?->getMessage(),
-            ]);
-
-            return response()->json([
-                'estado' => 'ERROR',
-                'tipo' => get_class($e),
-                'mensaje' => $e->getMessage(),
-                'causa' => $e->getPrevious()?->getMessage(),
-            ], 500);
-        }
-
-    })->name('b2.test');
+        })->name('b2.test');
 
 
-    // Prueba manual del respaldo de MEDIAPRO
-    Route::get('/backup/test', [BackupController::class, 'test'])
-        ->name('backup.test');
+        // Prueba manual del respaldo de MEDIAPRO
+        Route::get('/backup/test', [BackupController::class, 'test'])
+            ->name('backup.test');
+
+    });
 
 });
 

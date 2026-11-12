@@ -1,0 +1,45 @@
+/* Refuerzo visual de los accesos de la landing MEDIAPRO */
+.site-header .header-actions {
+    display: flex !important;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 18px;
+    flex-shrink: 0;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+.site-header .header-actions .login-link {
+    display: inline-flex !important;
+    align-items: center;
+    color: #f4efff !important;
+    text-decoration: none;
+    font-size: .78rem;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+.site-header .header-actions .button {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    min-height: 42px;
+    padding: 0 19px;
+    border: 1px solid rgba(205,174,255,.7);
+    border-radius: 2px;
+    background: linear-gradient(115deg,#8d55d9,#6135a8);
+    color: #fff !important;
+    text-decoration: none;
+    box-shadow: 0 8px 26px rgba(116,65,190,.22);
+    white-space: nowrap;
+}
+.site-header .header-actions a:hover { filter: brightness(1.15); }
+@media (max-width: 900px) {
+    .site-header { flex-wrap: wrap; gap: 14px; }
+    .site-header .header-actions { margin-left: auto; }
+}
+@media (max-width: 560px) {
+    .site-header .header-actions { width: 100%; justify-content: flex-start; }
+    .site-header .header-actions .login-link,
+    .site-header .header-actions .button { font-size: .68rem; }
+}
