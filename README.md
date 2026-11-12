@@ -2,7 +2,7 @@ Para iniciar sesion como administrador :) ->
 Email = kdzapata17@gmail.com
 Contraseña = mediapro
 
-Link video explicacion -> 
+Link video explicacion -> https://drive.google.com/file/d/1t5PW7A6ttkycMuxv_pzJWcFniW-gRZG8/view?usp=drivesdk
 
 # MEDIAPRO – Sistema de gestión audiovisual
 
