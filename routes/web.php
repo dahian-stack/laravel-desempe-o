@@ -25,6 +25,9 @@ Route::view('/', 'landing')->name('landing');
 Route::view('/politica-de-privacidad', 'legal.politica-privacidad')
     ->name('privacy.policy');
 
+// Terminos de servicio
+Route::view('/terminos-de-servicio', 'legal.terms')
+    ->name('terms');
 
 // Formulario de contacto
 Route::post('/contacto', [ContactController::class, 'store'])

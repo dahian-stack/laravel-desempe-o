@@ -1,77 +1,71 @@
-
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <title>{{ config('app.name', 'Laravel') }}</title>
-
+    <title>{{ config('app.name', 'MEDIAPRO') }}</title>
+    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
+    <link rel="stylesheet" href="{{ asset('css/mediapro-portal.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/mediapro-admin.css') }}">
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet">
-
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
-
-<body class="font-sans antialiased">
-<div class="min-h-screen bg-gray-100">
-
-    @include('layouts.navigation')
+<body class="font-sans antialiased mp-admin-body">
+<div class="min-h-screen mp-admin-shell">
+    @include('layouts.admin-navigation')
 
     @isset($header)
-        <header class="bg-white shadow">
-            <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+        <header class="mp-admin-page-header">
+            <div class="mp-admin-content">
                 {{ $header }}
             </div>
         </header>
     @endisset
 
-    <main>
+    <main class="mp-admin-content">
         {{ $slot }}
     </main>
 
+    @include('layouts.admin-footer')
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-
-        // Confirmación al eliminar
-        document.querySelectorAll('.delete-form').forEach(form => {
-            form.addEventListener('submit', function (e) {
-                e.preventDefault();
-
-                Swal.fire({
-                    title: '¿Estás seguro?',
-                    text: 'Esta acción no se puede deshacer',
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#d33',
-                    cancelButtonColor: '#6b7280',
-                    confirmButtonText: 'Sí, eliminar',
-                    cancelButtonText: 'Cancelar'
-                }).then(result => {
-                    if (result.isConfirmed) {
-                        form.submit();
-                    }
-                });
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.delete-form').forEach(form => {
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: 'Esta acción no se puede deshacer.',
+                icon: 'warning',
+                background: '#171323',
+                color: '#f5f0ff',
+                showCancelButton: true,
+                confirmButtonColor: '#9862d1',
+                cancelButtonColor: '#51465f',
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar'
+            }).then(result => {
+                if (result.isConfirmed) form.submit();
             });
         });
-
-        // Mensaje de éxito
-        @if(session('success'))
-        Swal.fire({
-            icon: 'success',
-            title: '¡Perfecto!',
-            text: @json(session('success')),
-            timer: 2500,
-            showConfirmButton: false
-        });
-        @endif
-
     });
+
+    @if(session('success'))
+    Swal.fire({
+        icon: 'success',
+        title: '¡Listo!',
+        text: @json(session('success')),
+        background: '#171323',
+        color: '#f5f0ff',
+        timer: 2600,
+        showConfirmButton: false
+    });
+    @endif
+});
 </script>
 </body>
 </html>

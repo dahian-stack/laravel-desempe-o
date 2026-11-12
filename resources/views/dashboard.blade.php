@@ -1,255 +1,89 @@
-<!doctype html>
-<html lang="es" data-bs-theme="light">
-
+<!DOCTYPE html>
+<html lang="es">
 <head>
-    <title>Inicio — Mediapro</title>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-
-    <!-- Bootstrap Icons -->
+    <meta name="theme-color" content="#090711">
+    <title>Panel administrativo | MEDIAPRO</title>
+    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
+    <link rel="stylesheet" href="{{ asset('css/mediapro-portal.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/mediapro-admin.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-
-    <style>
-        body {
-            background-color: #f0f4f8;
-        }
-
-        .card-modulo {
-            transition: all 0.3s ease;
-            border: 1px solid #d9e2ec;
-            border-left: 3px solid transparent;
-            background-color: #ffffff;
-        }
-        .card-modulo:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 0.25rem 0.75rem rgba(43, 108, 176, 0.12);
-            border-left-color: #6ea8d9;
-        }
-        .icono-modulo {
-            font-size: 1.8rem;
-            color: #4a8fc7;
-            opacity: 0.95;
-        }
-        .bienvenida {
-            background: linear-gradient(135deg, #e6f0fa 0%, #d7e8f5 100%);
-            color: #1e4d7b;
-            border-radius: 0.75rem;
-            border: 1px solid #bdd7ee;
-        }
-        .navbar {
-            background-color: #2c7abe !important;
-        }
-        .navbar .navbar-brand,
-        .navbar .nav-link {
-            color: #ffffff !important;
-        }
-        .navbar .nav-link:hover,
-        .navbar .nav-link.active {
-            color: #d4e6f7 !important;
-        }
-        h5 {
-            color: #1e4d7b;
-        }
-    </style>
 </head>
+<body class="mp-body mp-admin-body">
+@include('layouts.admin-navigation')
 
-<body class="d-flex flex-column min-vh-100">
+<main class="mp-main mp-admin-main">
+    <section class="mp-welcome mp-admin-welcome">
+        <div class="mp-welcome-copy">
+            <p class="mp-eyebrow"><span></span> CENTRO DE CONTROL · MEDIAPRO</p>
+            <h1>Bienvenida,<br>{{ auth()->user()->name }}.<br><em>Todo empieza aquí.</em></h1>
+            <p>Administra los recursos, clientes y proyectos de producción audiovisual desde un solo espacio.</p>
+            <a class="mp-primary-link" href="#modulos">Explorar módulos <span>↘</span></a>
+        </div>
+        <div class="mp-welcome-art" aria-hidden="true">
+            <div class="mp-orbit mp-orbit-one"></div>
+            <div class="mp-orbit mp-orbit-two"></div>
+            <div class="mp-art-center">MP<span>✳</span></div>
+            <span class="mp-art-caption">IMAGINAR · CREAR · CONTAR</span>
+        </div>
+        <div class="mp-welcome-index">MEDIAPRO / ADMINISTRACIÓN / {{ date('Y') }}</div>
+    </section>
 
-<!-- Barra de Navegación -->
-<header>
-    <nav class="navbar navbar-expand-lg shadow-sm">
-        <div class="container">
-            <a class="navbar-brand fw-semibold" href="{{ url('/dashboard') }}">
-                <i class="bi bi-film me-2"></i>Mediapro
+    <section class="mp-section mp-admin-modules" id="modulos">
+        <div class="mp-section-heading">
+            <div>
+                <p class="mp-eyebrow">01 — GESTIÓN</p>
+                <h2>Módulos del <em>sistema.</em></h2>
+            </div>
+            <span class="mp-count">7 ÁREAS DE ADMINISTRACIÓN</span>
+        </div>
+
+        <div class="mp-project-grid mp-admin-grid">
+            <a class="mp-project-card mp-admin-module" href="{{ route('clientes.index') }}">
+                <div class="mp-project-top"><span class="mp-project-icon"><i class="bi bi-people"></i></span><span class="mp-project-number">01 / CLIENTES</span></div>
+                <h3>Clientes</h3><p class="mp-project-description">Administra los clientes, sus datos de contacto y sus relaciones con las producciones.</p>
+                <span class="mp-admin-card-link">Abrir módulo <b>↗</b></span>
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="{{ url('/dashboard') }}">
-                            <i class="bi bi-house-fill me-1"></i> Inicio
-                        </a>
-                    </li>
-                </ul>
-
-                <ul class="navbar-nav">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                            <i class="bi bi-person-circle me-1"></i> {{ Auth::user()->name ?? 'Usuario' }}
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            <li>
-                                <form method="POST" action="{{ route('logout') }}">
-                                    @csrf
-                                    <button type="submit" class="dropdown-item">
-                                        <i class="bi bi-box-arrow-right me-1"></i> Cerrar sesión
-                                    </button>
-                                </form>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
+            <a class="mp-project-card mp-admin-module" href="{{ route('producciones.index') }}">
+                <div class="mp-project-top"><span class="mp-project-icon"><i class="bi bi-film"></i></span><span class="mp-project-number">02 / PROYECTOS</span></div>
+                <h3>Producciones</h3><p class="mp-project-description">Organiza los proyectos audiovisuales, sus etapas, estados y clientes asociados.</p>
+                <span class="mp-admin-card-link">Abrir módulo <b>↗</b></span>
+            </a>
+            <a class="mp-project-card mp-admin-module" href="{{ route('personales.index') }}">
+                <div class="mp-project-top"><span class="mp-project-icon"><i class="bi bi-person-badge"></i></span><span class="mp-project-number">03 / TALENTO</span></div>
+                <h3>Personal</h3><p class="mp-project-description">Gestiona el equipo humano, sus perfiles y la información de trabajo.</p>
+                <span class="mp-admin-card-link">Abrir módulo <b>↗</b></span>
+            </a>
+            <a class="mp-project-card mp-admin-module" href="{{ route('equipos_tecnicos.index') }}">
+                <div class="mp-project-top"><span class="mp-project-icon"><i class="bi bi-camera-reels"></i></span><span class="mp-project-number">04 / RECURSOS</span></div>
+                <h3>Equipos técnicos</h3><p class="mp-project-description">Controla los equipos audiovisuales, su disponibilidad y estado.</p>
+                <span class="mp-admin-card-link">Abrir módulo <b>↗</b></span>
+            </a>
+            <a class="mp-project-card mp-admin-module" href="{{ route('localizaciones.index') }}">
+                <div class="mp-project-top"><span class="mp-project-icon"><i class="bi bi-geo-alt"></i></span><span class="mp-project-number">05 / ESPACIOS</span></div>
+                <h3>Localizaciones</h3><p class="mp-project-description">Consulta y administra los lugares previstos para las grabaciones.</p>
+                <span class="mp-admin-card-link">Abrir módulo <b>↗</b></span>
+            </a>
+            <a class="mp-project-card mp-admin-module" href="{{ route('planes_rodaje.index') }}">
+                <div class="mp-project-top"><span class="mp-project-icon"><i class="bi bi-calendar-event"></i></span><span class="mp-project-number">06 / PLANIFICACIÓN</span></div>
+                <h3>Planes de rodaje</h3><p class="mp-project-description">Coordina fechas, horarios y organización de las jornadas de rodaje.</p>
+                <span class="mp-admin-card-link">Abrir módulo <b>↗</b></span>
+            </a>
+            <a class="mp-project-card mp-admin-module" href="{{ route('escenas.index') }}">
+                <div class="mp-project-top"><span class="mp-project-icon"><i class="bi bi-camera-reels-fill"></i></span><span class="mp-project-number">07 / CONTENIDO</span></div>
+                <h3>Escenas</h3><p class="mp-project-description">Gestiona las escenas, sus descripciones y necesidades de producción.</p>
+                <span class="mp-admin-card-link">Abrir módulo <b>↗</b></span>
+            </a>
         </div>
-    </nav>
-</header>
+    </section>
 
-<!-- Contenido Principal -->
-<main class="flex-grow-1 py-5">
-    <div class="container">
-
-        <!-- Tarjeta de Bienvenida -->
-        <div class="bienvenida p-5 mb-5">
-            <h1 class="fw-semibold mb-2">¡Bienvenida, {{ Auth::user()->name ?? 'Karol' }}! 👋</h1>
-            <p class="mb-0 opacity-80">Ya estás conectada y lista para gestionar todo el sistema de producción audiovisual.</p>
-        </div>
-
-        <!-- Título de Módulos -->
-        <h2 class="h5 fw-semibold mb-4" style="color: #1e4d7b;">
-            <i class="bi bi-grid-3x3-gap me-2" style="color: #4a8fc7;"></i> Módulos del Sistema
-        </h2>
-
-        <!-- Tarjetas de Módulos -->
-        <div class="row g-4">
-
-            <!-- Clientes -->
-            <div class="col-md-6 col-lg-4">
-                <a href="{{ route('clientes.index') }}" class="text-decoration-none">
-                    <div class="card card-modulo h-100 p-4">
-                        <div class="d-flex align-items-center">
-                            <div class="me-3">
-                                <i class="bi bi-people-fill icono-modulo"></i>
-                            </div>
-                            <div>
-                                <h5 class="fw-medium mb-1">Clientes</h5>
-                                <p class="text-muted small mb-0">Gestionar clientes y contactos</p>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-
-            <!-- Producciones -->
-            <div class="col-md-6 col-lg-4">
-                <a href="{{ route('producciones.index') }}" class="text-decoration-none">
-                    <div class="card card-modulo h-100 p-4">
-                        <div class="d-flex align-items-center">
-                            <div class="me-3">
-                                <i class="bi bi-film icono-modulo"></i>
-                            </div>
-                            <div>
-                                <h5 class="fw-medium mb-1">Producciones</h5>
-                                <p class="text-muted small mb-0">Proyectos, presupuestos y estados</p>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-
-            <!-- Personal -->
-            <div class="col-md-6 col-lg-4">
-                <a href="{{ route('personales.index') }}" class="text-decoration-none">
-                    <div class="card card-modulo h-100 p-4">
-                        <div class="d-flex align-items-center">
-                            <div class="me-3">
-                                <i class="bi bi-person-badge-fill icono-modulo"></i>
-                            </div>
-                            <div>
-                                <h5 class="fw-medium mb-1">Personal</h5>
-                                <p class="text-muted small mb-0">Equipo de trabajo y tarifas</p>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-
-            <!-- Equipos Técnicos -->
-            <div class="col-md-6 col-lg-4">
-                <a href="{{ route('equipos_tecnicos.index') }}" class="text-decoration-none">
-                    <div class="card card-modulo h-100 p-4">
-                        <div class="d-flex align-items-center">
-                            <div class="me-3">
-                                <i class="bi bi-camera-reels-fill icono-modulo"></i>
-                            </div>
-                            <div>
-                                <h5 class="fw-medium mb-1">Equipos Técnicos</h5>
-                                <p class="text-muted small mb-0">Material, mantenimiento y estado</p>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-
-            <!-- Localizaciones -->
-            <div class="col-md-6 col-lg-4">
-                <a href="{{ route('localizaciones.index') }}" class="text-decoration-none">
-                    <div class="card card-modulo h-100 p-4">
-                        <div class="d-flex align-items-center">
-                            <div class="me-3">
-                                <i class="bi bi-geo-alt-fill icono-modulo"></i>
-                            </div>
-                            <div>
-                                <h5 class="fw-medium mb-1">Localizaciones</h5>
-                                <p class="text-muted small mb-0">Lugares, costos y permisos</p>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-
-            <!-- Planes de Rodaje -->
-            <div class="col-md-6 col-lg-4">
-                <a href="{{ route('planes_rodaje.index') }}" class="text-decoration-none">
-                    <div class="card card-modulo h-100 p-4">
-                        <div class="d-flex align-items-center">
-                            <div class="me-3">
-                                <i class="bi bi-calendar-event-fill icono-modulo"></i>
-                            </div>
-                            <div>
-                                <h5 class="fw-medium mb-1">Planes de Rodaje</h5>
-                                <p class="text-muted small mb-0">Horarios, fechas y lugares</p>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-
-            <!-- Escenas -->
-            <div class="col-md-6 col-lg-4">
-                <a href="{{ route('escenas.index') }}" class="text-decoration-none">
-                    <div class="card card-modulo h-100 p-4">
-                        <div class="d-flex align-items-center">
-                            <div class="me-3">
-                                <i class="bi bi-clapperboard icono-modulo"></i>
-                            </div>
-                            <div>
-                                <h5 class="fw-medium mb-1">Escenas</h5>
-                                <p class="text-muted small mb-0">Descripciones y necesidades</p>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-
-        </div>
-    </div>
+    <section class="mp-profile-banner mp-admin-profile-banner">
+        <div><p class="mp-eyebrow">02 — TU CUENTA</p><h2>Administra tu perfil.</h2><p>Actualiza tus datos personales y tu fotografía de perfil.</p></div>
+        <a class="mp-outline-link" href="{{ route('profile.edit') }}">Ir a mi perfil <span>↗</span></a>
+    </section>
 </main>
 
-<!-- Pie de Página -->
-<footer class="py-4 mt-auto border-top" style="background-color: #eaf1f8;">
-    <div class="container text-center">
-        <p class="mb-0 small" style="color: #4a8fc7;">&copy; {{ date('Y') }} Mediapro — Sistema de Gestión de Producción Audiovisual</p>
-    </div>
-</footer>
-
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-
+@include('layouts.admin-footer')
 </body>
 </html>

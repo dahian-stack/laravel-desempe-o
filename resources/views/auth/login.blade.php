@@ -1,70 +1,47 @@
 <x-guest-layout>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+    <div class="mp-auth-heading">
+        <p class="mp-auth-eyebrow"><span></span> BIENVENIDO DE NUEVO</p>
+        <h1>Inicia <em>sesión.</em></h1>
+        <p>Accede a tu espacio de trabajo en MEDIAPRO.</p>
+    </div>
 
-    <form method="POST" action="{{ route('login') }}">
+    <x-auth-session-status class="mp-auth-status" :status="session('status')" />
+
+    <form method="POST" action="{{ route('login') }}" class="mp-auth-form">
         @csrf
 
-        <!-- Email Address -->
-        <div>
+        <div class="mp-auth-field">
             <x-input-label for="email" value="Correo electrónico" />
-            <x-text-input id="email" class="block mt-1 w-full"
-                          type="email"
-                          name="email"
-                          :value="old('email')"
-                          required autofocus autocomplete="username" />
+            <x-text-input id="email" class="mp-auth-input block mt-2 w-full"
+                          type="email" name="email" :value="old('email')"
+                          required autofocus autocomplete="username"
+                          placeholder="nombre@correo.com" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
-        <!-- Password -->
-        <div class="mt-4">
+        <div class="mp-auth-field">
             <x-input-label for="password" value="Contraseña" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
-                          type="password"
-                          name="password"
-                          required autocomplete="current-password" />
-
+            <x-text-input id="password" class="mp-auth-input block mt-2 w-full"
+                          type="password" name="password" required
+                          autocomplete="current-password" placeholder="Tu contraseña" />
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
 
-        <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox"
-                       class="rounded border-gray-300 text-violet-600 shadow-sm focus:ring-violet-500"
-                       name="remember">
-
-                <span class="ms-2 text-sm text-gray-600">
-                    Recordarme
-                </span>
+        <div class="mp-auth-options">
+            <label for="remember_me" class="mp-auth-check">
+                <input id="remember_me" type="checkbox" name="remember">
+                <span>Recordarme</span>
             </label>
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
             @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 hover:text-violet-700 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-violet-500"
-                   href="{{ route('password.request') }}">
-                    ¿Olvidaste tu contraseña?
-                </a>
+                <a class="mp-auth-link" href="{{ route('password.request') }}">¿Olvidaste tu contraseña?</a>
             @endif
-
-            <x-primary-button class="ms-3">
-                Iniciar sesión
-            </x-primary-button>
         </div>
 
-        <!-- Register Link -->
-        <div class="mt-6 pt-4 border-t border-gray-200 text-center">
-            <p class="text-sm text-gray-600">
-                ¿No tienes cuenta?
-                <a href="{{ route('register') }}"
-                   class="font-semibold text-violet-700 hover:text-violet-900 transition">
-                    Regístrate
-                </a>
-            </p>
-        </div>
+        <button type="submit" class="mp-auth-submit">INICIAR SESIÓN <span>→</span></button>
 
+        <div class="mp-auth-switch">
+            ¿Aún no tienes cuenta?
+            <a href="{{ route('register') }}">Regístrate aquí</a>
+        </div>
     </form>
 </x-guest-layout>
-```
